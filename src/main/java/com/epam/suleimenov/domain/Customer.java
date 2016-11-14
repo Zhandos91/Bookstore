@@ -1,11 +1,17 @@
 package com.epam.suleimenov.domain;
 
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import java.io.Serializable;
 import java.util.List;
 
 @Entity
+@NamedQueries({
+        @NamedQuery(name = "Customer.getAll", query = "select c from Customer c"),
+        @NamedQuery(name = "Customer.fetchById", query = "select c from Customer c where c.id = :id")
+})
 public class Customer extends BaseEntity implements Serializable {
 
     private String first_name;

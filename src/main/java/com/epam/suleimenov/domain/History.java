@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 @Entity
 public class History extends BaseEntity implements Serializable{
