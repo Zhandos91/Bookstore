@@ -11,6 +11,8 @@
 
     <properties>
         <spring.version>4.3.0.RELEASE</spring.version>
+        <hibernate.version>5.1.0.Final</hibernate.version>
+        <hibernate.jpa-api.version>1.0.1.Final</hibernate.jpa-api.version>
     </properties>
 
 
@@ -50,6 +52,23 @@
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <!--Hibernate-->
+        <!--<dependency>-->
+        <!--<groupId>org.hibernate.javax.persistence</groupId>-->
+        <!--<artifactId>hibernate-jpa-2.0-api</artifactId>-->
+        <!--<version>${hibernate.jpa-api.version}</version>-->
+        <!--</dependency>-->
+        <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-entitymanager</artifactId>
+        <version>${hibernate.version}</version>
         </dependency>
 
         <dependency>
