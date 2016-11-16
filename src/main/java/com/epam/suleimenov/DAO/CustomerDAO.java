@@ -1,6 +1,8 @@
 package com.epam.suleimenov.DAO;
 
-public interface CustomerDAO {
+import com.epam.suleimenov.domain.Customer;
+
+public interface CustomerDAO extends GenericDAO<Customer> {
 
 
 }

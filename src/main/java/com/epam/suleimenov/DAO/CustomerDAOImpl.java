@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CustomerDAOImpl implements GenericDAO<Customer> {
+public class CustomerDAOImpl implements CustomerDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -19,30 +19,32 @@ public class CustomerDAOImpl implements GenericDAO<Customer> {
 
     public List<Customer> getList() {
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
-        Criteria criteria = session.createCriteria(Customer.class, "Customer.getAll");
-        List<Customer> customers = criteria.list();
-        session.getTransaction().commit();
-        return customers;
+        Criteria criteria = session.createCriteria(Customer.class);
+        return criteria.list();
     }
 
     public Customer save(Customer customer) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        session.update(customer);
+        return customer;
     }
 
     public boolean remove(Customer customer) {
-        return false;
+        Session session = sessionFactory.getCurrentSession();
+        Customer removing_customer = fetchById(customer.getId());
+        session.delete(removing_customer);
+        return true;
     }
 
     public Customer fetchById(Integer id) {
-        return null;
+        Session session = sessionFactory.getCurrentSession();
+        Customer customer = (Customer) session.get(Customer.class, id);
+        return customer;
     }
 
     public Customer add(Customer customer) {
         Session session = sessionFactory.getCurrentSession();
-        session.beginTransaction();
         session.save(customer);
-        session.getTransaction().commit();
-        return null;
+        return customer;
     }
 }
