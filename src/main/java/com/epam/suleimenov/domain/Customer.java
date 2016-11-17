@@ -1,9 +1,6 @@
 package com.epam.suleimenov.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
@@ -14,14 +11,21 @@ import java.util.List;
 })
 public class Customer extends BaseEntity implements Serializable {
 
+    @Column(nullable = false)
     private String first_name;
+    @Column(nullable = false)
     private String last_name;
+    @Column(nullable = false)
     private Integer phone;
+    @Column(nullable = false)
     private String email;
+    @Column(nullable = false)
     private String password;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", nullable = false)
     private List<Address> addresses;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "customer_id", nullable = false)
     private List<Order> orders;
 
     public String getFirst_name() {

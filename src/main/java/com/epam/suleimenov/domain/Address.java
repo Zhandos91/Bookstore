@@ -1,14 +1,19 @@
 package com.epam.suleimenov.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Entity
 public class Address extends BaseEntity implements Serializable {
 
+    @Column(nullable = false)
     private String city;
+    @Column(nullable = false)
     private String state;
+    @Column(nullable = false)
     private Integer zip_code;
+    @Column(nullable = false)
     private String country;
 
     public String getCity() {

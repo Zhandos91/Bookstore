@@ -11,7 +11,7 @@ public class History extends BaseEntity implements Serializable{
 
     private String info;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Date recorded_date;
 
     public String getInfo() {
         return info;
@@ -21,19 +21,19 @@ public class History extends BaseEntity implements Serializable{
         this.info = info;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getRecorded_date() {
+        return recorded_date;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setRecorded_date(Date recorded_date) {
+        this.recorded_date = recorded_date;
     }
 
     @Override
     public String toString() {
         return "History{" +
                 "info='" + info + '\'' +
-                ", date=" + date +
+                ", date=" + recorded_date +
                 '}';
     }
 }

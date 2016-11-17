@@ -1,13 +1,17 @@
 package com.epam.suleimenov.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.io.Serializable;
 
 @Entity
 public class Delivery extends BaseEntity implements Serializable {
 
+    @Column(nullable = false)
     private String type;
+    @Column(nullable = false)
     private String estimated_time;
+    @Column(nullable = false)
     private Double cost;
 
     public String getType() {

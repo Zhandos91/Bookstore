@@ -10,10 +10,12 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Book extends BaseEntity implements Serializable {
 
+    @Column(nullable = false)
     private String title;
     private String publisher;
     @Temporal(TemporalType.DATE)
     private Date released_date;
+    @Column(nullable = false)
     private Double price;
     private Integer ISBN;
     private Integer pages;

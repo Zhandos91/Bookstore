@@ -6,23 +6,38 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@Table(name = "BOOK_ORDER")
 public class Order extends BaseEntity implements Serializable {
 
+    @Column(nullable = false)
     private String total_price;
+    @Column(nullable = false)
     private Date ordered_date;
+    @Column(nullable = false)
     private Integer tracking_num;
+    @Column(nullable = false)
     private Integer quantities;
+    @Column(nullable = false)
     private String payment_method;
+
+    @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date expected_delivery;
-    @ManyToMany
-    @JoinTable(name = "ORDER_BOOK", joinColumns = @JoinColumn(name = "order_fk"), inverseJoinColumns = @JoinColumn(name = "book_fk"))
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "ORDER_BOOK", joinColumns = @JoinColumn(name = "order_fk", nullable = false), inverseJoinColumns = @JoinColumn(name = "book_fk", nullable = false))
     private List<Book> books;
+
     @OneToOne
+    @JoinColumn
     private Delivery delivery;
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private List<Status> statuses;
-    @OneToMany
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
     private List<History> histories;
 
     public String getTotal_price() {
