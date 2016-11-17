@@ -11,5 +11,4 @@ public interface CustomerService {
     boolean remove(Customer customer);
     Customer fetchById(Integer id);
     Customer add(Customer customer);
-
 }

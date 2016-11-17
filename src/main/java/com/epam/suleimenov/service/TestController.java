@@ -1,6 +1,5 @@
 package com.epam.suleimenov.service;
 
-import com.epam.suleimenov.domain.Customer;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,8 @@ public class TestController {
 
     @Autowired
     CustomerService customerService;
+    @Autowired
+    DeliveryService deliveryService;
 
     private static Logger logger = getLogger(TestController.class);
 
@@ -26,11 +27,12 @@ public class TestController {
         model.addAttribute("test", "testing model viewer");
 
 //        model.addObject
-        Customer customer = new Customer();
-        customer.setFirst_name("Alex");
-        customer.setLast_name("Li");
-        customer.setEmail("a_li@epam.com");
-        customerService.add(customer);
+//        Delivery delivery = new Delivery();
+//        delivery.setCost(3.22);
+//        delivery.setEstimated_time("Within 6-8 business days");
+//        delivery.setType("air shipping");
+//        deliveryService.addDelivery(delivery);
+//        model.addAttribute("delivery", delivery);
 //
 //        logger.debug("customer", customer);
 //        logger.info("customer", customer);
@@ -38,6 +40,6 @@ public class TestController {
 //        List<Customer> customerList = customerService.getList();
 //        ModelAndView model = new ModelAndView("test");
 //        model.addObject("customerList", customerList);
-        return "test";
+        return "home";
     }
 }
