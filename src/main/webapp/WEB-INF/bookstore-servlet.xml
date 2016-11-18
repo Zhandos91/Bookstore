@@ -12,11 +12,10 @@
     <mvc:annotation-driven />
 
     <!-- Views mapped in JSPs under /WEB-INF/jsp -->
-    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
-        <!--<property name="prefix" value="/WEB-INF/views/jsp/"/>-->
-        <!--<property name="suffix" value=".jsp"/>-->
-        <!--&lt;!&ndash;<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />&ndash;&gt;-->
-    <!--</bean>-->
+    <bean id = "jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/views/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
 
     <!--Oracle Data Source Configuration-->
@@ -60,8 +59,9 @@
     </bean>
 
     <!--Apache Tiles View Resolver-->
-    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+    <bean id="viewResolverTiles" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+        <property name="order" value="1" />
     </bean>
 
 

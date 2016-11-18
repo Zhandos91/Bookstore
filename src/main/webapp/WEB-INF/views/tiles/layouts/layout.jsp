@@ -5,13 +5,27 @@
     <title><tiles:getAsString name="title" /></title>
 </head>
 <body>
-<div class="page">
-    <tiles:insertAttribute name="header" />
-    <div class="content">
-        <tiles:insertAttribute name="menu" />
-        <tiles:insertAttribute name="body" />
-    </div>
-    <tiles:insertAttribute name="footer" />
-</div>
+
+<table border="1" width="100%" height="100%" cellpadding="2" cellspacing="2">
+    <tr>
+        <td height="10%" colspan="2">
+            <tiles:insertAttribute name="header" ignore="true" />
+        </td>
+    </tr>
+    <tr>
+        <td width="20%" nowrap="nowrap">
+            <tiles:insertAttribute name="menu" />
+        </td>
+        <td width="%80">
+            <tiles:insertAttribute name="body" />
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <tiles:insertAttribute name="footer" />
+        </td>
+    </tr>
+</table>
+
 </body>
 </html>

@@ -1,9 +1,10 @@
 package com.epam.suleimenov.service;
 
+import com.epam.suleimenov.domain.Customer;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,10 +22,11 @@ public class TestController {
     private static Logger logger = getLogger(TestController.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    public String home(ModelMap model) {
+    public String home(Model model) {
 
         logger.info("TestController Testing");
         model.addAttribute("test", "testing model viewer");
+        model.addAttribute(new Customer());
 
 //        model.addObject
 //        Delivery delivery = new Delivery();
@@ -40,6 +42,6 @@ public class TestController {
 //        List<Customer> customerList = customerService.getList();
 //        ModelAndView model = new ModelAndView("test");
 //        model.addObject("customerList", customerList);
-        return "hello";
+        return "customerForm";
     }
 }

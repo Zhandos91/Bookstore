@@ -1,16 +1,22 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Zhandos_Suleimenov
-  Date: 11/17/2016
-  Time: 5:45 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-Test Menu
+<div style="background-color: green">
+
+    <div>
+        <h4 align="center">Account Info</h4>
+    </div>
+
+    <div style="padding: 5px;background-color: aliceblue">
+        <ul>
+            <li><a href="${pageContext.request.contextPath}/">Customer Info</a></li>
+            <li><a href="${pageContext.request.contextPath}/contactus">Orders</a></li>
+        </ul>
+    </div>
+
+</div>
 </body>
 </html>

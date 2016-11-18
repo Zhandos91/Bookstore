@@ -13,9 +13,9 @@
         <put-attribute name="footer" value="/WEB-INF/views/tiles/template/footer.jsp" />
     </definition>
 
-    <definition name="hello" extends="base">
-        <put-attribute name="title" value="Test title" />
-        <put-attribute name="body" value="/WEB-INF/views/jsp/test-body.jsp" />
+    <definition name="customerForm" extends="base">
+        <put-attribute name="title" value="Customer Registration" />
+        <put-attribute name="body" value="/WEB-INF/views/jsp/customerForm.jsp" />
     </definition>
 
 </tiles-definitions>
