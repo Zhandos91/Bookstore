@@ -12,10 +12,11 @@
     <mvc:annotation-driven />
 
     <!-- Views mapped in JSPs under /WEB-INF/jsp -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/jsp/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+    <!--<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="/WEB-INF/views/jsp/"/>-->
+        <!--<property name="suffix" value=".jsp"/>-->
+        <!--&lt;!&ndash;<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />&ndash;&gt;-->
+    <!--</bean>-->
 
 
     <!--Oracle Data Source Configuration-->
@@ -48,10 +49,7 @@
         </property>
     </bean>
 
-
-    <bean id="viewResolver"
-          class="org.springframework.web.servlet.view.tiles3.TilesViewResolver">
-    </bean>
+    <!--Apache Tiles Configuration-->
     <bean id="tilesConfigurer"
           class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions">
@@ -60,5 +58,12 @@
             </list>
         </property>
     </bean>
+
+    <!--Apache Tiles View Resolver-->
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+    </bean>
+
+
 
 </beans>

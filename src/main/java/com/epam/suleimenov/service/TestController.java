@@ -3,7 +3,7 @@ package com.epam.suleimenov.service;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,7 +21,7 @@ public class TestController {
     private static Logger logger = getLogger(TestController.class);
 
     @RequestMapping(method = RequestMethod.GET)
-    public String home(Model model) {
+    public String home(ModelMap model) {
 
         logger.info("TestController Testing");
         model.addAttribute("test", "testing model viewer");
@@ -40,6 +40,6 @@ public class TestController {
 //        List<Customer> customerList = customerService.getList();
 //        ModelAndView model = new ModelAndView("test");
 //        model.addObject("customerList", customerList);
-        return "home";
+        return "hello";
     }
 }

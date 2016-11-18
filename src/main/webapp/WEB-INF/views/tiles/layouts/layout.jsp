@@ -5,20 +5,13 @@
     <title><tiles:getAsString name="title" /></title>
 </head>
 <body>
-<header id="header">
+<div class="page">
     <tiles:insertAttribute name="header" />
-</header>
-
-<section id="sidemenu">
-    <tiles:insertAttribute name="menu" />
-</section>
-
-<section id="site-content">
-    <tiles:insertAttribute name="body" />
-</section>
-
-<footer id="footer">
+    <div class="content">
+        <tiles:insertAttribute name="menu" />
+        <tiles:insertAttribute name="body" />
+    </div>
     <tiles:insertAttribute name="footer" />
-</footer>
+</div>
 </body>
 </html>
