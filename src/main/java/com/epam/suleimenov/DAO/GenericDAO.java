@@ -5,8 +5,8 @@ import java.util.List;
 public interface GenericDAO<T> {
 
     List<T> getList();
-    T save(T object);
-    boolean remove(T object);
-    T fetchById(Integer id);
-    T add(T object);
+    void save(T object);
+    void delete(T object);
+    T findById(Integer id);
+    void update(T object);
 }

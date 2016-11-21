@@ -2,6 +2,7 @@ package com.epam.suleimenov.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 @Entity
@@ -21,12 +22,18 @@ public class Customer extends BaseEntity implements Serializable {
     private String email;
     @Column(nullable = false)
     private String password;
-    @OneToMany(cascade = CascadeType.ALL)
+    @Transient
+    private String confirm_password;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)
     private List<Address> addresses;
-    @OneToMany(cascade = CascadeType.ALL)
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)
     private List<Order> orders;
+
+
 
     public String getFirst_name() {
         return first_name;
@@ -68,6 +75,14 @@ public class Customer extends BaseEntity implements Serializable {
         this.password = password;
     }
 
+    public String getConfirm_password() {
+        return confirm_password;
+    }
+
+    public void setConfirm_password(String confirm_password) {
+        this.confirm_password = confirm_password;
+    }
+
     public List<Address> getAddresses() {
         return addresses;
     }
@@ -86,14 +101,16 @@ public class Customer extends BaseEntity implements Serializable {
 
     @Override
     public String toString() {
+
         return "Customer{" +
+                "id='" + id + '\'' +
                 "first_name='" + first_name + '\'' +
                 ", last_name='" + last_name + '\'' +
                 ", phone=" + phone +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", addresses=" + addresses +
-                ", orders=" + orders +
+//                ", addresses=" + Arrays.asList(addresses) +
+//                ", orders=" + Arrays.asList(orders) +
                 '}';
     }
 }

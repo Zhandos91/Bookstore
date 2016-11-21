@@ -12,6 +12,8 @@ public class Book extends BaseEntity implements Serializable {
 
     @Column(nullable = false)
     private String title;
+    @Column(nullable = false)
+    private String author;
     private String publisher;
     @Temporal(TemporalType.DATE)
     private Date released_date;
@@ -30,6 +32,14 @@ public class Book extends BaseEntity implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     public String getPublisher() {

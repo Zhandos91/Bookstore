@@ -7,8 +7,8 @@
     <title>Title</title>
 </head>
 <body>
-Spring test for index.jsp
-
+<%--<jsp:forward page="/WEB-INF/views/jsp/test.jsp"/>--%>
+<jsp:forward page="/listBooks"/>
 
 </body>
 </html>

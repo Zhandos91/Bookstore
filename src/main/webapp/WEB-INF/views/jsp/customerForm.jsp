@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Zhandos_Suleimenov
-  Date: 11/17/2016
-  Time: 5:51 PM
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 
@@ -18,7 +12,7 @@
 <body>
 <div class="container">
 
-    <sf:form id="registrationForm" class="form-horizontal" role="form" commandName="customer" method="post">
+    <sf:form id="registrationForm" class="form-horizontal" role="form" modelAttribute="customer" method="post">
 
         <div style="background-color: green" class="page-header"><h2>Customer Information</h2></div>
 
@@ -28,42 +22,47 @@
             <div class="col-md-10">
                 <sf:input path="first_name"/>
             </div>
+
         </div>
-        <%--<div class="form-group">--%>
-            <%--<label class="control-label col-md-2" for="last_name">Last Name:</label>--%>
-            <%--<div class="col-md-10">--%>
-                <%--<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name">--%>
-            <%--</div>--%>
-        <%--</div>--%>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="last_name">Last Name:</label>
+            <div class="col-md-10">
+                <sf:input path="last_name"/>
+            </div>
 
+        </div>
 
-        <%--<div class="form-group">--%>
-            <%--<label class="control-label col-md-2" for="email">Email:</label>--%>
-            <%--<div class="col-md-10">--%>
-                <%--<input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">--%>
-            <%--</div>--%>
-        <%--</div>--%>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="phone">Phone Number:</label>
+            <div class="col-md-10">
+                <sf:input path="phone"/>
+            </div>
+        </div>
 
-        <%--<div class="form-group">--%>
-            <%--<label class="control-label col-md-2" for="password">Password:</label>--%>
-            <%--<div class="col-md-10">--%>
-                <%--<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">--%>
-            <%--</div>--%>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="email">Email:</label>
+            <div class="col-md-10">
+                <sf:input type="email" path="email"/>
+            </div>
+        </div>
 
-        <%--</div>--%>
+        <div class="form-group">
+            <label class="control-label col-md-2" for="password">Password:</label>
+            <div class="col-md-10">
+                <sf:password path="password"/>
+            </div>
+        </div>
 
-        <%--<div class="form-group">--%>
-            <%--<label class="control-label col-md-2" for="confirm_password">Confirm Password:</label>--%>
-            <%--<div class="col-md-10">--%>
-                <%--<input type="password" class="form-control" id="confirm_password" name="confirm_password"--%>
-                       <%--placeholder="Retype Password">--%>
-            <%--</div>--%>
-        <%--</div>--%>
-
+        <div class="form-group">
+            <label class="control-label col-md-2" for="confirm_password">Confirm Password:</label>
+            <div class="col-md-10">
+                <sf:password path="confirm_password"/>
+            </div>
+        </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Next</button>
             </div>
         </div>
 

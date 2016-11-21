@@ -12,8 +12,8 @@
     <title>Title</title>
 </head>
 <body>
-Testing  really really
-${test}
+Successful submission  really really
+
 <%--<c:forEach items="${customerList}" var="customer">--%>
 
     <%--blaa<br/>--%>

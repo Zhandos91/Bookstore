@@ -24,7 +24,7 @@ public class Order extends BaseEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date expected_delivery;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "ORDER_BOOK", joinColumns = @JoinColumn(name = "order_fk", nullable = false), inverseJoinColumns = @JoinColumn(name = "book_fk", nullable = false))
     private List<Book> books;
 
@@ -32,11 +32,11 @@ public class Order extends BaseEntity implements Serializable {
     @JoinColumn
     private Delivery delivery;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private List<Status> statuses;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "order_id")
     private List<History> histories;
 

@@ -25,24 +25,19 @@ public class CustomerServiceImpl implements CustomerService {
         return customerDAO.getList();
     }
 
-    public Customer save(Customer customer) {
-        return customerDAO.save(customer);
+    public void update(Customer customer) {
+         customerDAO.update(customer);
     }
 
-    public boolean remove(Customer customer) {
-        return customerDAO.remove(customer);
+    public void delete(Customer customer) {
+        customerDAO.delete(customer);
     }
 
-    public Customer fetchById(Integer id) {
-        return customerDAO.fetchById(id);
+    public Customer findById(Integer id) {
+        return customerDAO.findById(id);
     }
 
-    public Customer add(Customer customer) {
-        logger.info("TestController Testing");
-        logger.debug("TestController Testing");
-        logger.warn("TestController Testing");
-        logger.error("TestController Testing");
-
-        return customerDAO.add(customer);
+    public void save(Customer customer) {
+        customerDAO.save(customer);
     }
 }

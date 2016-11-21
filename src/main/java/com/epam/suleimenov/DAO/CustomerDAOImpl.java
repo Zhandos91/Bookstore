@@ -16,35 +16,29 @@ public class CustomerDAOImpl implements CustomerDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-
     public List<Customer> getList() {
-        Session session = sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(Customer.class);
+        Criteria criteria = getSession().createCriteria(Customer.class);
         return criteria.list();
     }
 
-    public Customer save(Customer customer) {
-        Session session = sessionFactory.getCurrentSession();
-        session.update(customer);
+    public void update(Customer customer) {
+        getSession().update(customer);
+    }
+
+    public void delete(Customer customer) {
+        getSession().delete(customer);
+    }
+
+    public Customer findById(Integer id) {
+        Customer customer = getSession().get(Customer.class, id);
         return customer;
     }
 
-    public boolean remove(Customer customer) {
-        Session session = sessionFactory.getCurrentSession();
-        Customer removing_customer = fetchById(customer.getId());
-        session.delete(removing_customer);
-        return true;
+    public void save(Customer customer) {
+        getSession().save(customer);
     }
 
-    public Customer fetchById(Integer id) {
-        Session session = sessionFactory.getCurrentSession();
-        Customer customer = (Customer) session.get(Customer.class, id);
-        return customer;
-    }
-
-    public Customer add(Customer customer) {
-        Session session = sessionFactory.getCurrentSession();
-        session.save(customer);
-        return customer;
+    public Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 }
