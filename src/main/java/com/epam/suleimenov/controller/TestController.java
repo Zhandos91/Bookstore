@@ -7,15 +7,14 @@ import com.epam.suleimenov.service.BookService;
 import com.epam.suleimenov.service.CustomerService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +28,8 @@ public class TestController {
 
     @Autowired
     BookService bookService;
+
+    private List<Book> cart = new ArrayList<>();
 
     private static Logger logger = getLogger(TestController.class);
 
@@ -74,15 +75,50 @@ public class TestController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String registrationFormSubmit(@ModelAttribute Customer customer, BindingResult bindingResult, SessionStatus sessionStatus) {
+    public String registrationFormSubmit(@ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         logger.info("Customer {}", customer);
         customerService.save(customer);
         logger.info("CustomerId" + customer.getId());
         logger.info("{}" + customer);
+        redirectAttributes.addFlashAttribute("customer", customer);
+        return "redirect:/listBooks";
+    }
 
+    @RequestMapping(value = "/addAddress", method = RequestMethod.GET)
+    public String addAddress(Model model) {
+        model.addAttribute("address", new Address());
         return "addressForm";
     }
 
+    @RequestMapping(value = "/addAddress", method = RequestMethod.POST)
+    public String addAddress(@ModelAttribute Address address, @ModelAttribute Customer customer, BindingResult bindingResult) {
+
+        Customer aCustomer = customerService.findById(customer.getId());
+        List<Address> addresses = aCustomer.getAddresses();
+        addresses.add(address);
+        customerService.update(aCustomer);
+
+        return "listBooks";
+    }
+
+    @RequestMapping(value = "/{book_id}", method = RequestMethod.GET)
+    public String showBook(@PathVariable("book_id") Integer id, Model model ) {
+        Book book = bookService.findById(id);
+        logger.info("Showing {}", book);
+        model.addAttribute("book", book);
+
+        return "showBook";
+    }
+
+    @RequestMapping(value = "/addToCart", method = RequestMethod.POST)
+    @ResponseStatus(value = HttpStatus.OK)
+    public void addToCart(@ModelAttribute Book book, Model model, BindingResult bindingResult) {
+        logger.info("Adding book the shopping cart");
+        cart.add(book);
+        logger.info("{}", book);
+        model.addAttribute("cart", cart);
+//        return "listBooks";
+    }
 
     @RequestMapping(value = "/jandos")
     public String test(Model model) {

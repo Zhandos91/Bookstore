@@ -33,4 +33,9 @@
         <put-attribute name="body" value="/WEB-INF/views/jsp/login.jsp" />
     </definition>
 
+    <definition name="showBook" extends="base" >
+        <put-attribute name="title" value="Book Info " />
+        <put-attribute name="body" value="/WEB-INF/views/jsp/bookInfo.jsp" />
+    </definition>
+
 </tiles-definitions>

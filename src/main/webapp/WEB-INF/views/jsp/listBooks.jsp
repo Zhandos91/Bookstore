@@ -17,7 +17,7 @@
 
 <c:forEach items="${bookList}" var="book">
 
-    <a href="${pageContext.request.contextPath}/BookInfo">
+    <a href="${pageContext.request.contextPath}/${book.id}">
         <h3>${book.title}</h3>
         <h3>By ${book.author}</h3>
         <h3>$${book.price}</h3>

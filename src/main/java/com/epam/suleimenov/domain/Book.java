@@ -1,6 +1,9 @@
 package com.epam.suleimenov.domain;
 
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -23,7 +26,8 @@ public class Book extends BaseEntity implements Serializable {
     private Integer pages;
     private String description;
     private String brief;
-    @ManyToMany(mappedBy = "books")
+    @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Order> orders;
 
     public String getTitle() {
