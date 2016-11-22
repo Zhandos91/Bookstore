@@ -11,4 +11,5 @@ public interface CustomerService {
     void delete(Customer customer);
     Customer findById(Integer id);
     void save(Customer customer);
+    Customer findCustomerByLogin(String login);
 }

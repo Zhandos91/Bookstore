@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Date;
 import java.util.List;
@@ -36,44 +37,50 @@ public class TestController {
         logger.info("Listing Books");
         List<Book> bookList = bookService.getList();
         model.addAttribute("bookList", bookList);
-        model.addAttribute("hello", "hi to all");
         return "listBooks";
     }
 
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(Model model) {
+        model.addAttribute("customer", new Customer());
 
-    @RequestMapping(value = "/test", method = RequestMethod.GET)
+        return "login";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String loginSubmit(@ModelAttribute(value = "customer") Customer existing_customer, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if(existing_customer == null || existing_customer.getEmail().equals("") || existing_customer.getPassword().equals(""))
+            return "login";
+        Customer  customer = customerService.findCustomerByLogin(existing_customer.getEmail());
+        logger.info("Found {}", customer);
+        if(customer == null)
+            return "login";
+
+        if(customer.getPassword().equals(existing_customer.getPassword())) {
+            redirectAttributes.addFlashAttribute("customer", customer);
+            return "redirect:/listBooks";
+        }
+        return "login";
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String registrationForm(Model model) {
 
-        logger.info("TestController Testing");
-        model.addAttribute("test", "testing model viewer");
+        logger.info("Signing up a new customer");
         model.addAttribute("customer", new Customer());
         model.addAttribute("address", new Address());
 
-//        model.addObject
-//        Delivery delivery = new Delivery();
-//        delivery.setCost(3.22);
-//        delivery.setEstimated_time("Within 6-8 business days");
-//        delivery.setType("air shipping");
-//        deliveryService.addDelivery(delivery);
-//        model.addAttribute("delivery", delivery);
-//
-//        logger.debug("customer", customer);
-//        logger.info("customer", customer);
-//
-//        List<Customer> customerList = customerService.getList();
-//        ModelAndView model = new ModelAndView("test");
-//        model.addObject("customerList", customerList);
         return "customerForm";
     }
 
-    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String registrationFormSubmit(@ModelAttribute Customer customer, BindingResult bindingResult, SessionStatus sessionStatus) {
         logger.info("Customer {}", customer);
         customerService.save(customer);
         logger.info("CustomerId" + customer.getId());
+        logger.info("{}" + customer);
 
-
-        return "test";
+        return "addressForm";
     }
 
 

@@ -8,7 +8,8 @@ import java.util.List;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Customer.getAll", query = "select c from Customer c"),
-        @NamedQuery(name = "Customer.fetchById", query = "select c from Customer c where c.id = :id")
+        @NamedQuery(name = "Customer.fetchById", query = "select c from Customer c where c.id = :id"),
+        @NamedQuery(name = "Customer.getByEmail", query = "select c from Customer c where c.email = :email")
 })
 public class Customer extends BaseEntity implements Serializable {
 

@@ -4,5 +4,5 @@ import com.epam.suleimenov.domain.Customer;
 
 public interface CustomerDAO extends GenericDAO<Customer> {
 
-
+        Customer getCustomerByEmail(String email);
 }

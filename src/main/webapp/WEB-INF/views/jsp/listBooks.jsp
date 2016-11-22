@@ -9,9 +9,9 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div class="page-header"><label><h3>Hello, Customer!</h3></label>
-    <%--<label class="col-md-offset-8"><h3><a href="${pageContext.request.contextPath}/do/logout">LOGOUT</a></h3></label>--%>
-</div>
+
+<div class="page-header"><label><h3>Hello, ${customer.first_name} ${customer.last_name}!</h3></label></div>
+
 
 <h3 class="bg-danger">A list of books:</h3>
 

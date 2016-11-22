@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="container" >
-    <sf:form modelAttribute="address" class="form-horizontal" role="form" method="post" >
+    <sf:form modelAttribute="address" action="/listBooks" class="form-horizontal" role="form" method="post" >
         <div style="background-color: green" class="page-header"><h2>Address Information</h2></div>
 
         <div class="form-group" >

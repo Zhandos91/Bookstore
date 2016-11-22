@@ -40,4 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
     public void save(Customer customer) {
         customerDAO.save(customer);
     }
+
+    @Override
+    public Customer findCustomerByLogin(String login) {
+        return customerDAO.getCustomerByEmail(login);
+    }
 }

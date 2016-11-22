@@ -3,6 +3,7 @@ package com.epam.suleimenov.DAO;
 
 import com.epam.suleimenov.domain.Customer;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,13 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     public void save(Customer customer) {
         getSession().save(customer);
+    }
+
+    @Override
+    public Customer getCustomerByEmail(String email) {
+        Query query = getSession().getNamedQuery("Customer.getByEmail").setParameter("email", email);
+        Customer customer = (Customer) query.uniqueResult();
+        return customer;
     }
 
     public Session getSession() {
