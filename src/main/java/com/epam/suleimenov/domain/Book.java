@@ -119,9 +119,9 @@ public class Book extends BaseEntity implements Serializable {
                 ", price=" + price +
                 ", ISBN=" + ISBN +
                 ", pages=" + pages +
-                ", description='" + description + '\'' +
-                ", brief='" + brief + '\'' +
-                ", orders=" + orders +
+//                ", description='" + description + '\'' +
+//                ", brief='" + brief + '\'' +
+//                ", orders=" + orders +
                 '}';
     }
 }

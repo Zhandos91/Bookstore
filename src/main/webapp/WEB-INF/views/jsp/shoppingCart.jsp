@@ -1,6 +1,8 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,27 +14,37 @@
 
 <div class="container">
 
-    <div class="page-header"><label><h3>Your Cart</h3></label></div>
+    <spring:url value="/removeBookFromCart" var="removeBook" />
+
+    <div class="page-header"><h1>Your Cart</h1></div>
+
+    <sf:form class="form-horizontal">
 
     <c:forEach items="${shoppingCart}" var="book" >
-        ${book.author}
-        ${book.publisher}
 
+        <h2>
+        <div class="form-group" >
+            <label class="control-label col-xs-offset-7 col-xs-2">Quantity</label>
+            <label class="control-label col-xs-2">Price</label>
+        </div>
+        <div class="form-group" >
+            <label class="control-label col-xs-7">
+            <a href="${pageContext.request.contextPath}/${book.id}">
+                ${book.title} By ${book.author} $${book.price}
+            </a>
+            </label>
+            <label class="control-label col-xs-2">4</label>
+            <label class="control-label col-xs-2">35.77</label>
+
+           <a class="btn btn-primary" href="${pageContext.request.contextPath}/remove/${book.id}" >REMOVE</a>
+
+        </div>
+        </h2>
 
     </c:forEach>
-    <%--<form class="form-horizontal">--%>
 
 
-
-
-    <%--<div class="form-group" >--%>
-        <%--<label class="control-label col-md-2" for="email">Email:</label>--%>
-        <%--<div class="col-md-10">--%>
-            <%--<input type="email" class="form-control" id="email" placeholder="Enter email">--%>
-        <%--</div>--%>
-
-    <%--</div>--%>
-    <%--</form>--%>
+    </sf:form>
 
 </div>
 </body>

@@ -21,7 +21,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 @Controller
 @SessionAttributes({"shoppingCart", "book"})
-public class TestController {
+public class FrontController {
 
     @Autowired
     CustomerService customerService;
@@ -31,7 +31,7 @@ public class TestController {
 
     private List<Book> shoppingCart = new ArrayList<>();
 
-    private static Logger logger = getLogger(TestController.class);
+    private static Logger logger = getLogger(FrontController.class);
 
     @RequestMapping(value = "/listBooks")
     public String home(Model model) {
@@ -110,12 +110,24 @@ public class TestController {
         return "showBook";
     }
 
+    @RequestMapping(value = "/remove/{book_id}", method = RequestMethod.GET)
+    public String removeBookFromCart(@PathVariable("book_id") Integer id, Model model) {
+        Book book = bookService.findById(id);
+        logger.info("Removing the book from the cart");
+        shoppingCart.remove(book);
+        return "shoppingCart";
+    }
+
     @RequestMapping(value = "/addToCart", method = RequestMethod.POST)
     public String addToCart(@ModelAttribute Book book, Model model, BindingResult bindingResult) {
         logger.info("Adding book to the shopping cart");
-        shoppingCart.add(book);
-        logger.info("{}", book);
-        model.addAttribute("shoppingCart", shoppingCart);
+        if(shoppingCart.contains(book))
+            logger.info("Book already exists");
+        else {
+            shoppingCart.add(book);
+            logger.info("{}", book);
+            model.addAttribute("shoppingCart", shoppingCart);
+        }
         return "shoppingCart";
     }
 

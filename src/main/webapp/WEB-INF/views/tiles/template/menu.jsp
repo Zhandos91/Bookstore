@@ -12,7 +12,7 @@
 
     <div style="padding: 5px;background-color: aliceblue">
         <ul>
-            <li><a href="${pageContext.request.contextPath}/">Home</a></li>
+            <li><a href="${pageContext.request.contextPath}/listBooks">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/contactus">Orders</a></li>
         </ul>
     </div>
