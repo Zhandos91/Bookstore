@@ -7,7 +7,6 @@ import com.epam.suleimenov.service.BookService;
 import com.epam.suleimenov.service.CustomerService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +20,7 @@ import java.util.List;
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Controller
+@SessionAttributes({"shoppingCart", "book"})
 public class TestController {
 
     @Autowired
@@ -29,7 +29,7 @@ public class TestController {
     @Autowired
     BookService bookService;
 
-    private List<Book> cart = new ArrayList<>();
+    private List<Book> shoppingCart = new ArrayList<>();
 
     private static Logger logger = getLogger(TestController.class);
 
@@ -111,13 +111,12 @@ public class TestController {
     }
 
     @RequestMapping(value = "/addToCart", method = RequestMethod.POST)
-    @ResponseStatus(value = HttpStatus.OK)
-    public void addToCart(@ModelAttribute Book book, Model model, BindingResult bindingResult) {
-        logger.info("Adding book the shopping cart");
-        cart.add(book);
+    public String addToCart(@ModelAttribute Book book, Model model, BindingResult bindingResult) {
+        logger.info("Adding book to the shopping cart");
+        shoppingCart.add(book);
         logger.info("{}", book);
-        model.addAttribute("cart", cart);
-//        return "listBooks";
+        model.addAttribute("shoppingCart", shoppingCart);
+        return "shoppingCart";
     }
 
     @RequestMapping(value = "/jandos")
