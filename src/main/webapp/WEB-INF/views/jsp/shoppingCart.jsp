@@ -1,8 +1,9 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,34 +15,57 @@
 
 <div class="container">
 
-    <spring:url value="/removeBookFromCart" var="removeBook" />
+    <spring:url value="/removeBookFromCart" var="removeBook"/>
 
-    <div class="page-header"><h1>Your Cart</h1></div>
+    <div style="align-content: center" class="text-danger"><h1>Your Cart</h1></div>
 
     <sf:form class="form-horizontal">
 
-    <c:forEach items="${shoppingCart}" var="book" >
+        <c:set var="total" value="${0}"/>
 
         <h2>
-        <div class="form-group" >
-            <label class="control-label col-xs-offset-7 col-xs-2">Quantity</label>
-            <label class="control-label col-xs-2">Price</label>
+        <div class="form-group">
+            <label class="text-primary control-label col-xs-offset-7 col-xs-2">Quantity</label>
+            <label class="text-primary control-label col-xs-2">Price</label>
         </div>
-        <div class="form-group" >
-            <label class="control-label col-xs-7">
-            <a href="${pageContext.request.contextPath}/${book.id}">
-                ${book.title} By ${book.author} $${book.price}
-            </a>
-            </label>
-            <label class="control-label col-xs-2">4</label>
-            <label class="control-label col-xs-2">35.77</label>
+        <c:forEach items="${shoppingCart}" var="book">
 
-           <a class="btn btn-primary" href="${pageContext.request.contextPath}/remove/${book.id}" >REMOVE</a>
 
+
+            <div class="form-group" style="background-color: yellow">
+                <label class="control-label col-xs-7">
+                    <a href="${pageContext.request.contextPath}/${book.key.id}">
+                            ${book.key.title} By ${book.key.author} $${book.key.price}
+                    </a>
+                </label>
+                <label class="control-label col-xs-2">${book.value}</label>
+                <label class="control-label col-xs-2"><c:out value="$${book.value * book.key.price}"/> </label>
+
+                <c:set var="total" value="${total + book.value * book.key.price}"/>
+
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/remove/${book.key.id}">REMOVE</a>
+
+            </div>
+        </c:forEach>
+
+
+        <div class="form-group">
+            <label class="text-danger control-label col-xs-offset-7 col-xs-2">Total Price</label>
+            <label class="text-danger control-label col-xs-2">$<fmt:formatNumber type="number"
+                                                                                                   maxFractionDigits="2"
+                                                                                                   value="${total}"/></label>
         </div>
         </h2>
 
-    </c:forEach>
+        <br/><br/>
+        <br/><br/>
+        
+        <div class="form-group">
+            <h2>
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks">CONTINUE SHOPPING</a>
+            <button style="float: right;" type="submit" class="col-xs-offset-2 btn btn-primary">CHECKOUT</button>
+            </h2>
+        </div>
 
 
     </sf:form>

@@ -13,14 +13,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
 @Controller
-@SessionAttributes({"shoppingCart", "book"})
+@SessionAttributes({"shoppingCart", "book", "customer", "bookList"})
 public class FrontController {
 
     @Autowired
@@ -29,7 +27,7 @@ public class FrontController {
     @Autowired
     BookService bookService;
 
-    private List<Book> shoppingCart = new ArrayList<>();
+    private Map<Book, Integer> shoppingCart = new HashMap<>();
 
     private static Logger logger = getLogger(FrontController.class);
 
@@ -67,8 +65,9 @@ public class FrontController {
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public String registrationForm(Model model) {
 
+        Customer customer = new Customer();
         logger.info("Signing up a new customer");
-        model.addAttribute("customer", new Customer());
+        model.addAttribute("customer", customer);
         model.addAttribute("address", new Address());
 
         return "customerForm";
@@ -77,11 +76,12 @@ public class FrontController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String registrationFormSubmit(@ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         logger.info("Customer {}", customer);
+        customer.setAddresses(new ArrayList<Address>());
         customerService.save(customer);
         logger.info("CustomerId" + customer.getId());
         logger.info("{}" + customer);
         redirectAttributes.addFlashAttribute("customer", customer);
-        return "redirect:/listBooks";
+        return "redirect:/addAddress";
     }
 
     @RequestMapping(value = "/addAddress", method = RequestMethod.GET)
@@ -93,17 +93,23 @@ public class FrontController {
     @RequestMapping(value = "/addAddress", method = RequestMethod.POST)
     public String addAddress(@ModelAttribute Address address, @ModelAttribute Customer customer, BindingResult bindingResult) {
 
-        Customer aCustomer = customerService.findById(customer.getId());
-        List<Address> addresses = aCustomer.getAddresses();
-        addresses.add(address);
-        customerService.update(aCustomer);
+        logger.info("Adding address {}", address);
+        logger.info("Adding address to a customer {}", customer);
 
-        return "listBooks";
+        List<Address> addresses = customer.getAddresses();
+        addresses.add(address);
+        customerService.update(customer);
+
+        return "redirect:/listBooks";
     }
 
     @RequestMapping(value = "/{book_id}", method = RequestMethod.GET)
     public String showBook(@PathVariable("book_id") Integer id, Model model ) {
         Book book = bookService.findById(id);
+//           for(Map.Entry<Book, Integer> entry : shoppingCart.entrySet()) {
+//
+//           }
+
         logger.info("Showing {}", book);
         model.addAttribute("book", book);
 
@@ -120,14 +126,18 @@ public class FrontController {
 
     @RequestMapping(value = "/addToCart", method = RequestMethod.POST)
     public String addToCart(@ModelAttribute Book book, Model model, BindingResult bindingResult) {
+
         logger.info("Adding book to the shopping cart");
-        if(shoppingCart.contains(book))
-            logger.info("Book already exists");
-        else {
-            shoppingCart.add(book);
-            logger.info("{}", book);
-            model.addAttribute("shoppingCart", shoppingCart);
+        if(shoppingCart.containsKey(book)) {
+            logger.info("Book already exists {}", book);
+            Integer quantity = shoppingCart.get(book);
+            shoppingCart.put(book, quantity + 1);
         }
+        else {
+            shoppingCart.put(book, 1);
+        }
+        model.addAttribute("shoppingCart", shoppingCart);
+
         return "shoppingCart";
     }
 

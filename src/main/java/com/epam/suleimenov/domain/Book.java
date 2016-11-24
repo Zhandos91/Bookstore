@@ -30,6 +30,7 @@ public class Book extends BaseEntity implements Serializable {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Order> orders;
 
+
     public String getTitle() {
         return title;
     }
