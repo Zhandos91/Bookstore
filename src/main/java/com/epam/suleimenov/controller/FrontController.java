@@ -3,6 +3,7 @@ package com.epam.suleimenov.controller;
 import com.epam.suleimenov.domain.Address;
 import com.epam.suleimenov.domain.Book;
 import com.epam.suleimenov.domain.Customer;
+import com.epam.suleimenov.domain.Delivery;
 import com.epam.suleimenov.service.BookService;
 import com.epam.suleimenov.service.CustomerService;
 import org.slf4j.Logger;
@@ -17,8 +18,9 @@ import java.util.*;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+
 @Controller
-@SessionAttributes({"shoppingCart", "book", "customer", "bookList"})
+@SessionAttributes({"shoppingCart", "book", "customer", "bookList", "delivery_methods"})
 public class FrontController {
 
     @Autowired
@@ -27,9 +29,39 @@ public class FrontController {
     @Autowired
     BookService bookService;
 
+    private List<Delivery>  delivery_methods = new ArrayList<>();
+
     private Map<Book, Integer> shoppingCart = new HashMap<>();
 
     private static Logger logger = getLogger(FrontController.class);
+
+    {
+        logger.info("Initializing delivery method");
+        Delivery delivery = new Delivery();
+        delivery.setType("Next Day Air");
+        delivery.setEstimated_time("1-2 business days");
+        delivery.setCost(8.0);
+        delivery_methods.add(delivery);
+
+        delivery = new Delivery();
+        delivery.setType("Second Day Air");
+        delivery.setEstimated_time("2-3 business days");
+        delivery.setCost(6.0);
+        delivery_methods.add(delivery);
+
+        delivery = new Delivery();
+        delivery.setType("Priority Mail");
+        delivery.setEstimated_time("3-4 business days");
+        delivery.setCost(4.0);
+        delivery_methods.add(delivery);
+
+        delivery = new Delivery();
+        delivery.setType("Standard Ground Delivery");
+        delivery.setEstimated_time("4-8 business days");
+        delivery.setCost(2.0);
+        delivery_methods.add(delivery);
+
+    }
 
     @RequestMapping(value = "/listBooks")
     public String home(Model model) {
@@ -140,6 +172,36 @@ public class FrontController {
 
         return "shoppingCart";
     }
+
+
+    @RequestMapping(value = "/shipping", method = RequestMethod.GET)
+    public String showShippingOption(Model model){
+
+        Delivery delivery = new Delivery();
+        logger.info("Showing shipping choice {}", delivery);
+        model.addAttribute("delivery", delivery);
+        model.addAttribute("delivery_methods", delivery_methods);
+        return "shipping";
+    }
+
+    @RequestMapping(value = "/shipping", method = RequestMethod.POST)
+    public String submitShippingInfo(@ModelAttribute Delivery delivery, Model model, BindingResult bindingResult) {
+
+       for(Delivery myDelivery: delivery_methods) {
+           if(myDelivery.getType().equals(delivery.getType())) {
+               logger.info("Submitting before Shipping {}", delivery);
+               delivery.setEstimated_time(myDelivery.getEstimated_time());
+               delivery.setCost(myDelivery.getCost());
+               logger.info("Submitting after Shipping {}", delivery);
+           }
+
+       }
+        logger.info("Submitting Shipping {}", delivery);
+
+
+        return "orderInfo";
+    }
+
 
     @RequestMapping(value = "/jandos")
     public String test(Model model) {

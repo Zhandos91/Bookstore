@@ -1,4 +1,6 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -10,14 +12,18 @@
 <body>
 <h2>Shipping Methods</h2>
 
-<sf:form modelAttribute="shipping">
+<sf:form modelAttribute="delivery" method="post">
+
+    <c:forEach items="${delivery_methods}" var="mydelivery">
+        <div class="form-group">
+            <label class="control-label col-xs-6"><sf:radiobutton path="type" value="${mydelivery.type}" />${mydelivery.type} </label>
+            <label class="control-label col-xs-3">${mydelivery.estimated_time} </label>
+            <label class="control-label col-xs-3">$${mydelivery.cost} </label>
+        </div>
+    </c:forEach>
 
 
-    <sf:radiobutton path="type" value="Next Day Air"></sf:radiobutton>
-    <sf:radiobutton path="type" value="Second Day Air"></sf:radiobutton>
-    <sf:radiobutton path="type" value="Priority"></sf:radiobutton>
-    <sf:radiobutton path="type" value="Standard Ground Delivery"></sf:radiobutton>
-
+    <button style="float: right;" type="submit" class="col-xs-offset-2 btn btn-primary">NEXT</button>
 </sf:form>
 </body>
 </html>

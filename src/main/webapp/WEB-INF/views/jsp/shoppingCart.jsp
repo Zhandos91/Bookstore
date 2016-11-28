@@ -15,11 +15,11 @@
 
 <div class="container">
 
-    <spring:url value="/removeBookFromCart" var="removeBook"/>
+    <spring:url value="/shipping" var="checkout"/>
 
     <div style="align-content: center" class="text-danger"><h1>Your Cart</h1></div>
 
-    <sf:form class="form-horizontal">
+    <sf:form class="form-horizontal" action="${checkout}" method="get">
 
         <c:set var="total" value="${0}"/>
 

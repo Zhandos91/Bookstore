@@ -28,6 +28,6 @@
         <div style="color:red">${loginError}</div>
     </sf:form>
 
-</div>
+
 </body>
 </html>
