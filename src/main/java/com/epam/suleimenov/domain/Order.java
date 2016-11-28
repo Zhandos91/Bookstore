@@ -10,7 +10,7 @@ import java.util.List;
 public class Order extends BaseEntity implements Serializable {
 
     @Column(nullable = false)
-    private String total_price;
+    private Double total_price;
     @Column(nullable = false)
     private Date ordered_date;
     @Column(nullable = false)
@@ -40,11 +40,11 @@ public class Order extends BaseEntity implements Serializable {
     @JoinColumn(name = "order_id")
     private List<History> histories;
 
-    public String getTotal_price() {
+    public Double getTotal_price() {
         return total_price;
     }
 
-    public void setTotal_price(String total_price) {
+    public void setTotal_price(Double total_price) {
         this.total_price = total_price;
     }
 
@@ -129,10 +129,10 @@ public class Order extends BaseEntity implements Serializable {
                 ", quantities=" + quantities +
                 ", payment_method='" + payment_method + '\'' +
                 ", expected_delivery=" + expected_delivery +
-                ", books=" + books +
-                ", delivery=" + delivery +
-                ", statuses=" + statuses +
-                ", histories=" + histories +
+//                ", books=" + books +
+//                ", delivery=" + delivery +
+//                ", statuses=" + statuses +
+//                ", histories=" + histories +
                 '}';
     }
 }

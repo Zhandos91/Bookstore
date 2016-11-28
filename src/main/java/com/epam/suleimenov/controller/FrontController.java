@@ -1,9 +1,6 @@
 package com.epam.suleimenov.controller;
 
-import com.epam.suleimenov.domain.Address;
-import com.epam.suleimenov.domain.Book;
-import com.epam.suleimenov.domain.Customer;
-import com.epam.suleimenov.domain.Delivery;
+import com.epam.suleimenov.domain.*;
 import com.epam.suleimenov.service.BookService;
 import com.epam.suleimenov.service.CustomerService;
 import org.slf4j.Logger;
@@ -20,7 +17,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 
 @Controller
-@SessionAttributes({"shoppingCart", "book", "customer", "bookList", "delivery_methods"})
+@SessionAttributes({"shoppingCart", "book", "customer", "bookList", "delivery_methods", "order"})
 public class FrontController {
 
     @Autowired
@@ -197,11 +194,38 @@ public class FrontController {
 
        }
         logger.info("Submitting Shipping {}", delivery);
+        model.addAttribute(delivery);
 
+        Order order = new Order();
+        order.setOrdered_date(new Date());
+        order.setTracking_num((int)Math.round(Math.random() * 55555));
+        double total_price = 0;
+        int quantity = 0;
+        for(Map.Entry<Book, Integer> entry : shoppingCart.entrySet()) {
+            total_price = total_price + entry.getKey().getPrice() * entry.getValue();
+            quantity = quantity + entry.getValue();
+           }
 
+        total_price = total_price + quantity*delivery.getCost()/2;
+        total_price = total_price + delivery.getCost();
+        order.setQuantities(quantity);
+        order.setTotal_price(total_price);
+        order.setPayment_method("online");
+        order.setDelivery(delivery);
+        order.setBooks(new ArrayList<Book>());
+        order.setStatuses(new ArrayList<Status>());
+        order.setHistories(new ArrayList<History>());
+        model.addAttribute("order", order);
         return "orderInfo";
     }
 
+
+    @RequestMapping(value = "/submitOrder")
+    public String submitOrder(@ModelAttribute Order order, BindingResult bindingResult) {
+        logger.info("Submitting order {}", order);
+
+        return "orderSuccess";
+    }
 
     @RequestMapping(value = "/jandos")
     public String test(Model model) {
