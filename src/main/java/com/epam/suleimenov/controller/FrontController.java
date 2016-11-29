@@ -3,6 +3,7 @@ package com.epam.suleimenov.controller;
 import com.epam.suleimenov.domain.*;
 import com.epam.suleimenov.service.BookService;
 import com.epam.suleimenov.service.CustomerService;
+import com.epam.suleimenov.service.OrderService;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ public class FrontController {
 
     @Autowired
     BookService bookService;
+
+    @Autowired
+    OrderService orderService;
 
     private List<Delivery>  delivery_methods = new ArrayList<>();
 
@@ -65,6 +69,8 @@ public class FrontController {
         logger.info("Listing Books");
         List<Book> bookList = bookService.getList();
         model.addAttribute("bookList", bookList);
+        List<Order> orders = orderService.getList();
+        model.addAttribute("orders", orders);
         return "listBooks";
     }
 
@@ -201,30 +207,77 @@ public class FrontController {
         order.setTracking_num((int)Math.round(Math.random() * 55555));
         double total_price = 0;
         int quantity = 0;
+
+        List<Book> bookList = new ArrayList<>();
+
         for(Map.Entry<Book, Integer> entry : shoppingCart.entrySet()) {
             total_price = total_price + entry.getKey().getPrice() * entry.getValue();
             quantity = quantity + entry.getValue();
+            bookList.add(entry.getKey());
            }
-
+        order.setBooks(bookList);
         total_price = total_price + quantity*delivery.getCost()/2;
         total_price = total_price + delivery.getCost();
         order.setQuantities(quantity);
         order.setTotal_price(total_price);
         order.setPayment_method("online");
         order.setDelivery(delivery);
-        order.setBooks(new ArrayList<Book>());
-        order.setStatuses(new ArrayList<Status>());
-        order.setHistories(new ArrayList<History>());
         model.addAttribute("order", order);
         return "orderInfo";
     }
 
 
     @RequestMapping(value = "/submitOrder")
-    public String submitOrder(@ModelAttribute Order order, BindingResult bindingResult) {
-        logger.info("Submitting order {}", order);
+    public String submitOrder(@ModelAttribute Order order, @ModelAttribute Customer customer, Model model,BindingResult bindingResult) {
 
+        shoppingCart.clear();
+        model.addAttribute("shoppingCart", shoppingCart);
+        order.setStatuses(new ArrayList<Status>());
+        order.setHistories(new ArrayList<History>());
+        Status status = new Status();
+        status.setInfo("ordered");
+        order.getStatuses().add(status);
+
+
+        logger.info("Delivery {}", order.getDelivery());
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.DAY_OF_YEAR, 7);
+        Date expected_delivery = calendar.getTime();
+        order.setExpected_delivery(expected_delivery);
+
+        if(customer.getOrders() == null)
+            customer.setOrders(new ArrayList<Order>());
+
+        customer.getOrders().add(order);
+
+        customerService.update(customer);
+        orderService.save(order);
+
+        List<Order> orders = orderService.getList();
+        model.addAttribute("orders", orders);
+        logger.info("Submitting order {}", order);
+        logger.info("id=" + order.getId());
+        model.addAttribute("order", order);
         return "orderSuccess";
+    }
+
+    @RequestMapping(value = "/orderStatus")
+    public String showOrderStatus(Model model) {
+        List<Order> orders = orderService.getList();
+        model.addAttribute("orders", orders);
+        for(Order order: orders) {
+            logger.info("Listing order {}", order);
+        }
+
+        return "orderStatus";
+    }
+
+    @RequestMapping(value = "/showShoppingCart", method = RequestMethod.GET)
+    public String showShoppingCart() {
+
+        return "shoppingCart";
     }
 
     @RequestMapping(value = "/jandos")

@@ -12,8 +12,10 @@
 
     <div style="padding: 5px;background-color: aliceblue">
         <ul>
-            <li><a href="${pageContext.request.contextPath}/listBooks">Home</a></li>
-            <li><a href="${pageContext.request.contextPath}/addAddress">Add Address</a></li>
+            <li><a href="${pageContext.request.contextPath}/listBooks">home</a></li>
+            <li><a href="${pageContext.request.contextPath}/addAddress">add address</a></li>
+            <li><a href="${pageContext.request.contextPath}/orderStatus">order status</a></li>
+            <li><a href="${pageContext.request.contextPath}/showShoppingCart">shopping cart</a></li>
         </ul>
     </div>
 
