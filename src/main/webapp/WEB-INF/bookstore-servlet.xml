@@ -10,6 +10,8 @@
 
     <!-- Annotation handlers (Applied by default to ALL @controllers -->
     <mvc:annotation-driven />
+    
+    <mvc:resources mapping="/webjars/**" location="/webjars/" />
 
     <!-- Views mapped in JSPs under /WEB-INF/jsp -->
     <bean id = "jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
