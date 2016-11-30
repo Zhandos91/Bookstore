@@ -8,5 +8,5 @@ public interface GenericDAO<T> {
     void save(T object);
     void delete(T object);
     T findById(Integer id);
-    void update(T object);
+    T update(T object);
 }

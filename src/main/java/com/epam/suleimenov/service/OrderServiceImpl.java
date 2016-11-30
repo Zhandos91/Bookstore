@@ -24,8 +24,8 @@ public class OrderServiceImpl implements OrderService {
         return orderDAO.getList();
     }
 
-    public void update(Order order) {
-        orderDAO.update(order);
+    public Order update(Order order) {
+        return orderDAO.update(order);
     }
 
     public void delete(Order order) {

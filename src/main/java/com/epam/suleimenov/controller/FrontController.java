@@ -252,10 +252,9 @@ public class FrontController {
 
         customer.getOrders().add(order);
 
-        customerService.update(customer);
-        orderService.save(order);
+        Customer saved_customer = customerService.update(customer);
 
-        List<Order> orders = orderService.getList();
+        List<Order> orders = saved_customer.getOrders();
         model.addAttribute("orders", orders);
         logger.info("Submitting order {}", order);
         logger.info("id=" + order.getId());
@@ -264,8 +263,8 @@ public class FrontController {
     }
 
     @RequestMapping(value = "/orderStatus")
-    public String showOrderStatus(Model model) {
-        List<Order> orders = orderService.getList();
+    public String showOrderStatus(@ModelAttribute Customer customer, Model model) {
+        List<Order> orders = customer.getOrders();
         model.addAttribute("orders", orders);
         for(Order order: orders) {
             logger.info("Listing order {}", order);

@@ -22,8 +22,10 @@ public class CustomerDAOImpl implements CustomerDAO {
         return criteria.list();
     }
 
-    public void update(Customer customer) {
-        getSession().update(customer);
+    public Customer update(Customer customer) {
+//        Customer customer = findById(customer1.getId());
+//        getSession().evict(customer);
+        return (Customer) getSession().merge(customer);
     }
 
     public void delete(Customer customer) {
@@ -37,6 +39,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     public void save(Customer customer) {
         getSession().save(customer);
+        getSession().evict(customer);
     }
 
     @Override

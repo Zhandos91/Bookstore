@@ -20,8 +20,8 @@ public class BookDAOImpl implements BookDAO {
         return criteria.list();
     }
 
-    public void update(Book book) {
-        getSession().update(book);
+    public Book update(Book book) {
+        return (Book)getSession().merge(book);
     }
 
     public void delete(Book book) {

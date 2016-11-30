@@ -39,8 +39,8 @@ public class OrderDAOImpl implements OrderDAO {
     }
 
     @Override
-    public void update(Order order) {
-        getSession().update(order);
+    public Order update(Order order) {
+        return (Order)getSession().merge(order);
     }
 
     public Session getSession() {

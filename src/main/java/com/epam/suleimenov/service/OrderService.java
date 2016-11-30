@@ -7,7 +7,7 @@ import java.util.List;
 public interface OrderService {
 
     List<Order> getList();
-    void update(Order order);
+    Order update(Order order);
     void delete(Order order);
     Order findById(Integer id);
     void save(Order order);

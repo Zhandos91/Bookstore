@@ -25,8 +25,8 @@ public class CustomerServiceImpl implements CustomerService {
         return customerDAO.getList();
     }
 
-    public void update(Customer customer) {
-         customerDAO.update(customer);
+    public Customer update(Customer customer) {
+         return customerDAO.update(customer);
     }
 
     public void delete(Customer customer) {
