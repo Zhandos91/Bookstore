@@ -4,21 +4,13 @@
     <title>Title</title>
 </head>
 <body>
-<div style="background-color: green">
 
-    <div>
-        <h4 align="center">Account Info</h4>
-    </div>
-
-    <div style="padding: 5px;background-color: aliceblue">
-        <ul>
-            <li><a href="${pageContext.request.contextPath}/listBooks">home</a></li>
-            <li><a href="${pageContext.request.contextPath}/addAddress">add address</a></li>
-            <li><a href="${pageContext.request.contextPath}/orderStatus">order status</a></li>
-            <li><a href="${pageContext.request.contextPath}/showShoppingCart">shopping cart</a></li>
-        </ul>
-    </div>
-
+<div style="padding: 5px;background-color: green; margin-top: 50px;position: fixed;width: 20%;top:83px" align="center">
+    <h5 style="background-color: aquamarine"><a class="text-warning" href="${pageContext.request.contextPath}/listBooks">home</a></h5>
+    <h5 style="background-color: aquamarine"><a class="text-warning" href="${pageContext.request.contextPath}/addAddress">add address</a></h5>
+    <h5 style="background-color: aquamarine"><a class="text-warning" href="${pageContext.request.contextPath}/orderStatus">order status</a></h5>
+    <h5 style="background-color: aquamarine"><a class="text-warning" href="${pageContext.request.contextPath}/showShoppingCart">shopping cart</a></h5>
 </div>
+
 </body>
 </html>
