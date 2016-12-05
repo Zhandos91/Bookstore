@@ -279,38 +279,6 @@ public class FrontController {
         return "shoppingCart";
     }
 
-    @RequestMapping(value = "/jandos")
-    public String test(Model model) {
-        logger.info("In testing");
-        Customer customer = new Customer();
-//        customer.setEmail("sad@epam.com");
-//        customer.setFirst_name("lian");
-//        customer.setLast_name("li");
-//        customer.setPassword("ddd");
-//        customer.setPhone(3444);
-//        Address address = new Address();
-//        address.setCity("LA");
-//        address.setState("CA");
-//        address.setCountry("USA");
-//        address.setZip_code(588);
-//        List<Address> addresses = new ArrayList<>();
-//        addresses.add(address);
-//        customer.setAddresses(addresses);
-        customer = customerService.findById(26);
-        List<Address> addresses = customer.getAddresses();
-        Address address = new Address();
-        address.setState("IN");
-        address.setCountry("USA");
-        address.setCity("WL");
-        address.setZip_code(333);
-        addresses.add(address);
-        customerService.update(customer);
-
-        logger.info("Customer {}", customer);
-
-        return "test";
-    }
-
     @RequestMapping(value = "/addDefaultBooks")
     public String addDefaultBooks() {
         Book book = new Book();

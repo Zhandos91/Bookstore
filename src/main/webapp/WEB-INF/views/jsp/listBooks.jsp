@@ -10,10 +10,11 @@
 </head>
 <body>
 
-<div class="page-header"><label><h3>Hello, ${customer.first_name} ${customer.last_name}!</h3></label></div>
+<div class="container" >
+<div class="page-header"><h2 class="text-danger">Hello, ${customer.first_name} ${customer.last_name}!</h2></div>
 
 
-<h3 class="bg-danger">A list of books:</h3>
+<h3 class="text-success" align="center">A list of books</h3>
 
 <c:forEach items="${bookList}" var="book">
 
@@ -27,6 +28,6 @@
 
 </c:forEach>
 
-
+</div>
 </body>
 </html>

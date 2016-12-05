@@ -17,40 +17,88 @@
 
 <div class="container">
 
-    <sf:form class="form-inline" action="${submitOrder}" modelAttribute="order" role="form">
+    <sf:form action="${submitOrder}" modelAttribute="order" role="form">
 
 
-        <h2>Shipping To</h2>
 
-        <h3> ${customer.first_name} ${customer.last_name}</h3>
-        <h3>${customer.addresses[0].city}, ${customer.addresses[0].state} ${customer.addresses[0].zip_code}</h3>
-        <h3>${customer.addresses[0].country}</h3>
-        <h3>${customer.phone}</h3>
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading"><h3>Shipping To</h3></div>
+                    <div class="panel-body">
+                        <h4> ${customer.first_name} ${customer.last_name}</h4>
+                        <h4>${customer.addresses[0].city}, ${customer.addresses[0].state} ${customer.addresses[0].zip_code}</h4>
+                        <h4>${customer.addresses[0].country}, ${customer.phone}</h4>
 
-        <h2>Credit Card</h2>
+                    </div>
 
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading"><h3>Credit Card</h3></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label class="control-label col-xs-4" for="card_type">Card Type:</label>
+                            <select class="control-panel" id="card_type">
+                                <option value="">CHOOSE ONE</option>
+                                <option value="ADMIN">AMERICAN EXPRESS</option>
+                                <option value="STUDENT">VISA</option>
+                                <option value="TEACHER">MASTERCARD</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4" for="number">Number: </label>
+                            <input type="text" size="15" id="number"/>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-4">Expiration: </label>
+                            <input type="text" size="1" placeholder="mm" id="exp_m"/>
 
-        <div class="form-group">
-            <label class="control-label" for="card_type">Card Type:</label>
-            <select class="control-panel" id="card_type">
-                <option value="">CHOOSE ONE</option>
-                <option value="ADMIN">AMERICAN EXPRESS</option>
-                <option value="STUDENT">VISA</option>
-                <option value="TEACHER">MASTERCARD</option>
-            </select>
+                            <label class="control-label">/</label>
+                            <input type="text" size="1" placeholder="yyyy" id="exp_y"/>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="form-group">
-            <label class="control-label" for="number">Number: </label>
-            <input type="text" id="number"/>
-        </div>
 
-        <div class="form-group">
-            <label class="control-label">Expiration: </label>
-            <input type="text" id="exp_m"/>
 
-            <label class="control-label">/</label>
-            <input type="text" id="exp_y"/>
-        </div>
+
+
+
+        <%--<h2>Shipping To</h2>--%>
+
+        <%--<h3> ${customer.first_name} ${customer.last_name}</h3>--%>
+        <%--<h3>${customer.addresses[0].city}, ${customer.addresses[0].state} ${customer.addresses[0].zip_code}</h3>--%>
+        <%--<h3>${customer.addresses[0].country}</h3>--%>
+        <%--<h3>${customer.phone}</h3>--%>
+
+        <%--<h2>Credit Card</h2>--%>
+
+
+        <%--<div class="form-group">--%>
+            <%--<label class="control-label" for="card_type">Card Type:</label>--%>
+            <%--<select class="control-panel" id="card_type">--%>
+                <%--<option value="">CHOOSE ONE</option>--%>
+                <%--<option value="ADMIN">AMERICAN EXPRESS</option>--%>
+                <%--<option value="STUDENT">VISA</option>--%>
+                <%--<option value="TEACHER">MASTERCARD</option>--%>
+            <%--</select>--%>
+        <%--</div>--%>
+        <%--<div class="form-group">--%>
+            <%--<label class="control-label" for="number">Number: </label>--%>
+            <%--<input type="text" id="number"/>--%>
+        <%--</div>--%>
+
+        <%--<div class="form-group">--%>
+            <%--<label class="control-label">Expiration: </label>--%>
+            <%--<input type="text" id="exp_m"/>--%>
+
+            <%--<label class="control-label">/</label>--%>
+            <%--<input type="text" id="exp_y"/>--%>
+        <%--</div>--%>
 
 
 

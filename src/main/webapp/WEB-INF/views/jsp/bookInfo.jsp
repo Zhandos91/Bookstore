@@ -16,12 +16,15 @@
     <spring:url value="/addToCart" var="addToCart" />
 
 <sf:form class="form-horizontal" action="${addToCart}" role="form" method="post">
-    <label class="control-label">${book.title}</label>
 
-    <label class="control-label">${book.pages}</label>
-    <label class="control-label">${book.publisher}</label>
-    <label class="control-label">${book.price}</label>
-    <label class="control-label">${book.description}</label>
+    <h2 class="text-success">${book.title}</h2>
+    <h4 class="text-info">By ${book.author}</h4>
+    <h4 class="text-warning">Published by ${book.publisher}</h4>
+    <h4 class="text-danger">Price:$${book.price}</h4>
+    <h4 class="text-info">Pages:${book.pages}</h4>
+    <h4 class="text-primary">${book.description}</h4>
+
+    <br/>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <button type="submit" class="btn btn-primary">ADD TO CART</button>

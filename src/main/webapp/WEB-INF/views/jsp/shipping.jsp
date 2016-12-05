@@ -10,20 +10,29 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<h2>Shipping Methods</h2>
+
+
+<div class="container" >
+    <div class="page-header"><h2 class="text-danger">Shipping Methods</h2></div>
+
+
 
 <sf:form modelAttribute="delivery" method="post">
 
     <c:forEach items="${delivery_methods}" var="mydelivery">
+
         <div class="form-group">
-            <label class="control-label col-xs-6"><sf:radiobutton path="type" value="${mydelivery.type}" />${mydelivery.type} </label>
+            <label class="control-label col-xs-3"><sf:radiobutton path="type" value="${mydelivery.type}"/> ${mydelivery.type} </label>
             <label class="control-label col-xs-3">${mydelivery.estimated_time} </label>
             <label class="control-label col-xs-3">$${mydelivery.cost} </label>
+            <br/>
+            <br/>
         </div>
     </c:forEach>
 
-
-    <button style="float: right;" type="submit" class="col-xs-offset-2 btn btn-primary">NEXT</button>
+    <br/><br/>
+    <button style="float: left;" type="submit" class="btn btn-primary">NEXT</button>
 </sf:form>
+</div>
 </body>
 </html>

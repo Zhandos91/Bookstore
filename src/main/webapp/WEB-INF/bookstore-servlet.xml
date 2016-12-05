@@ -12,6 +12,7 @@
     <mvc:annotation-driven />
     
     <mvc:resources mapping="/webjars/**" location="/webjars/" />
+    <mvc:resources mapping="/resources/**" location="/resources/images/" />
 
     <!-- Views mapped in JSPs under /WEB-INF/jsp -->
     <bean id = "jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
