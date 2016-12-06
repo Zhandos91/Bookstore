@@ -17,16 +17,16 @@
 
 <sf:form class="form-horizontal" action="${addToCart}" role="form" method="post">
 
-    <h2 class="text-success">${book.title}</h2>
-    <h4 class="text-info">By ${book.author}</h4>
-    <h4 class="text-warning">Published by ${book.publisher}</h4>
-    <h4 class="text-danger">Price:$${book.price}</h4>
-    <h4 class="text-info">Pages:${book.pages}</h4>
+    <h2 class="text-success" align="center">${book.title}</h2>
+    <h4 class="text-info col-xs-offset-1">By ${book.author}</h4>
+    <h4 class="text-warning col-xs-offset-1">Published by ${book.publisher}</h4>
+    <h4 class="text-danger col-xs-offset-1">Price:$${book.price}</h4>
+    <h4 class="text-info col-xs-offset-1">Pages:${book.pages}</h4>
     <h4 class="text-primary">${book.description}</h4>
 
     <br/>
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-xs-offset-1">
             <button type="submit" class="btn btn-primary">ADD TO CART</button>
         </div>
     </div>

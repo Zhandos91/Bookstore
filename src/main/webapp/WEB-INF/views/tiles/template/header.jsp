@@ -3,10 +3,16 @@
 <head>
 </head>
 <body>
-<%--<div style="padding: 15px;background-color: green" align="left"><h3>Bookstore</h3></div>--%>
+
+<h2>
     <a href="${pageContext.request.contextPath}/listBooks">
-        <h2><span class="glyphicon glyphicon-book">Bookstore</span></h2>
+        <span class="glyphicon glyphicon-book">Bookstore</span>
     </a>
+
+    <a href="${pageContext.request.contextPath}/logout" class="btn btn-info btn-lg" style="float:right">
+        <span class="glyphicon glyphicon-log-out"></span> Log out
+    </a>
+</h2>
 
 </body>
 </html>

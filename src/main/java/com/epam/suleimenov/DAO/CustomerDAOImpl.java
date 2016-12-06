@@ -24,8 +24,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     public Customer update(Customer customer) {
 //        Customer customer = findById(customer1.getId());
-//        getSession().evict(customer);
-        return (Customer) getSession().merge(customer);
+        Customer updated = (Customer) getSession().merge(customer);
+        getSession().evict(customer);
+        return updated;
     }
 
     public void delete(Customer customer) {

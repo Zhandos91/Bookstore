@@ -3,6 +3,6 @@
 <head>
 </head>
 <body>
-<div style="padding: 15px;background-color: green" align="center">Copyright &copy; EPAM 2016. All rights reserved </div>
+<div style="padding: 15px;background-color: yellowgreen" align="center">Copyright &copy; EPAM 2016. All rights reserved </div>
 </body>
 </html>

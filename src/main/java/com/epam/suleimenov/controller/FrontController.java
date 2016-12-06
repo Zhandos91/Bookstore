@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.*;
@@ -18,7 +19,7 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 
 @Controller
-@SessionAttributes({"shoppingCart", "book", "customer", "bookList", "delivery_methods", "order"})
+@SessionAttributes({"shoppingCart", "book", "customer", "bookList", "delivery_methods", "order", "orders"})
 public class FrontController {
 
     @Autowired
@@ -95,6 +96,12 @@ public class FrontController {
             return "redirect:/listBooks";
         }
         return "login";
+    }
+
+    @RequestMapping(value = "/logout")
+    public String logout(SessionStatus sessionStatus) {
+        sessionStatus.setComplete();
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -251,13 +258,12 @@ public class FrontController {
             customer.setOrders(new ArrayList<Order>());
 
         customer.getOrders().add(order);
-
         Customer saved_customer = customerService.update(customer);
-
+//        orderService.update(order);
         List<Order> orders = saved_customer.getOrders();
+
         model.addAttribute("orders", orders);
         logger.info("Submitting order {}", order);
-        logger.info("id=" + order.getId());
         model.addAttribute("order", order);
         return "orderSuccess";
     }

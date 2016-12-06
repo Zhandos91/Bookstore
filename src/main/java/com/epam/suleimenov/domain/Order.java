@@ -129,6 +129,7 @@ public class Order extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "Order{" +
+                "id=" + id +
                 "total_price='" + total_price + '\'' +
                 ", ordered_date=" + ordered_date +
                 ", tracking_num=" + tracking_num +

@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -10,14 +9,18 @@
 <body>
 
 <div class="container">
-    <div class="page-header">
-        <h1 style="background-color: aquamarine">Order Complete</h1>
-    </div>
-    <h1 style="background-color: chartreuse">Thank you for the order!</h1>
-    <p>Your order number is: ${order.id}</p>
-    <p>Once your order has been shipped we will notify you via the e-mail address that is listed in your your account information.You can
-    review the status of your order at any time by clicking the Order Stratus button in the navigation menu.</p>
+    <div class="page-header"><h2 class="text-success">Order Complete</h2></div>
 
+    <h3 class="text-info">Thank you for the order!</h3>
+    <strong>Your order number is:
+        <mark>${order.id}</mark>
+        ${o}
+    </strong>
+    <br/><br/>
+    <p>Once your order has been shipped we will notify you via the e-mail address that is listed in your your account
+        information.You can
+        review the status of your order at any time by clicking the Order Stratus button in the navigation menu.</p>
+    <br/>
     <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks">CONTINUE</a>
 </div>
 

@@ -23,7 +23,7 @@
 
         <c:set var="total" value="${0}"/>
 
-        <h2>
+        <h3>
         <div class="form-group">
             <label class="text-primary control-label col-xs-offset-7 col-xs-2">Quantity</label>
             <label class="text-primary control-label col-xs-2">Price</label>
@@ -32,7 +32,7 @@
 
 
 
-            <div class="form-group" style="background-color: yellow">
+            <div class="form-group" style="background-color: greenyellow">
                 <label class="control-label col-xs-7">
                     <a href="${pageContext.request.contextPath}/${book.key.id}">
                             ${book.key.title} By ${book.key.author} $${book.key.price}
@@ -55,16 +55,16 @@
                                                                                                    maxFractionDigits="2"
                                                                                                    value="${total}"/></label>
         </div>
-        </h2>
+        </h3>
 
         <br/><br/>
         <br/><br/>
         
         <div class="form-group">
-            <h2>
+            <h3>
             <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks">CONTINUE SHOPPING</a>
             <button style="float: right;" type="submit" class="col-xs-offset-2 btn btn-primary">CHECKOUT</button>
-            </h2>
+            </h3>
         </div>
 
 

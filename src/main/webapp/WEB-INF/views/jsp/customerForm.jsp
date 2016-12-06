@@ -12,9 +12,12 @@
 <body>
 <div class="container">
 
-    <sf:form id="registrationForm" class="form-horizontal" role="form" modelAttribute="customer" method="post">
+    <div class="page-header">
+        <h1 class="text-danger">Customer Information</h1>
+    </div>
 
-        <div style="background-color: green" class="page-header"><h2>Customer Information</h2></div>
+
+    <sf:form id="registrationForm" class="form-horizontal" role="form" modelAttribute="customer" method="post">
 
 
         <div class="form-group">
@@ -63,6 +66,7 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="submit" class="btn btn-primary">Next</button>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/">CANCEL</a>
             </div>
         </div>
 

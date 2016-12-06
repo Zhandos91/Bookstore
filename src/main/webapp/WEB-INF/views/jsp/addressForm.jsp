@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,10 +14,14 @@
 
 <div class="container" >
 
-    <%--<spring:url value="/listBooks" var="listBooks" />--%>
+    <div class="page-header">
+        <h1 class="text-danger">Address Form</h1>
+    </div>
+
+
+<%--<spring:url value="/listBooks" var="listBooks" />--%>
 
     <sf:form modelAttribute="address" class="form-horizontal" role="form" method="post" >
-        <div style="background-color: green" class="page-header"><h2>Address Information</h2></div>
 
         <div class="form-group" >
             <label style="text-align: right" class="control-label col-xs-2" for="city" >City:</label>
@@ -49,6 +54,9 @@
         <div class="form-group">
             <div class="col-xs-offset-2 col-xs-10">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <%--<c:if test="${not empty customer.addresses}" >--%>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks">CANCEL</a>
+                <%--</c:if>--%>
             </div>
         </div>
 
