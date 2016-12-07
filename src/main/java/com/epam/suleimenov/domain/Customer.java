@@ -1,8 +1,13 @@
 package com.epam.suleimenov.domain;
 
+import org.hibernate.annotations.*;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import java.io.Serializable;
-import java.util.Arrays;
+import org.hibernate.annotations.CascadeType;
 import java.util.List;
 
 @Entity
@@ -26,11 +31,13 @@ public class Customer extends BaseEntity implements Serializable {
     @Transient
     private String confirm_password;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade({CascadeType.PERSIST, CascadeType.SAVE_UPDATE, CascadeType.MERGE})
     @JoinColumn(name = "customer_id", nullable = false)
     private List<Address> addresses;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade({CascadeType.PERSIST, CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "customer_id", nullable = false)
     private List<Order> orders;
 

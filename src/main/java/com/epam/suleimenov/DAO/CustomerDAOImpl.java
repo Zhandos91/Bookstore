@@ -24,9 +24,10 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     public Customer update(Customer customer) {
 //        Customer customer = findById(customer1.getId());
-        Customer updated = (Customer) getSession().merge(customer);
-        getSession().evict(customer);
-        return updated;
+//        Customer updated = (Customer) getSession().merge(customer);
+
+        getSession().saveOrUpdate(customer);
+        return customer;
     }
 
     public void delete(Customer customer) {
@@ -39,8 +40,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     public void save(Customer customer) {
-        getSession().save(customer);
-        getSession().evict(customer);
+        getSession().persist(customer);
+//        getSession().evict(customer);
     }
 
     @Override

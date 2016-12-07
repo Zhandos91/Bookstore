@@ -1,9 +1,11 @@
 package com.epam.suleimenov.domain;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import org.hibernate.annotations.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -32,16 +34,19 @@ public class Order extends BaseEntity implements Serializable {
     @JoinTable(name = "ORDER_BOOK", joinColumns = @JoinColumn(name = "order_fk", nullable = false), inverseJoinColumns = @JoinColumn(name = "book_fk", nullable = false))
     private List<Book> books;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
+    @Cascade({CascadeType.PERSIST, CascadeType.SAVE_UPDATE})
     @JoinColumn
     private Delivery delivery;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade({CascadeType.PERSIST, CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "order_id")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Status> statuses;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
+    @Cascade({CascadeType.PERSIST, CascadeType.SAVE_UPDATE})
     @JoinColumn(name = "order_id")
     @Fetch(value = FetchMode.SUBSELECT)
     private List<History> histories;
