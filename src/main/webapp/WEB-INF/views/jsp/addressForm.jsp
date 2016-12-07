@@ -54,9 +54,9 @@
         <div class="form-group">
             <div class="col-xs-offset-2 col-xs-10">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <%--<c:if test="${not empty customer.addresses}" >--%>
+                <c:if test="${not empty customer.addresses}" >
                 <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks">CANCEL</a>
-                <%--</c:if>--%>
+                </c:if>
             </div>
         </div>
 
