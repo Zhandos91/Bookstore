@@ -66,11 +66,12 @@ public class FrontController {
     }
 
     @RequestMapping(value = "/listBooks")
-    public String home(Model model) {
+    public String home(@ModelAttribute Customer customer, Model model) {
         logger.info("Listing Books");
         List<Book> bookList = bookService.getList();
         model.addAttribute("bookList", bookList);
-        List<Order> orders = orderService.getList();
+//        List<Order> orders = orderService.getList();
+        List<Order> orders = customer.getOrders();
         model.addAttribute("orders", orders);
         return "listBooks";
     }
@@ -118,6 +119,7 @@ public class FrontController {
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String registrationFormSubmit(@ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         logger.info("Customer {}", customer);
+        customer.setOrders(new ArrayList<Order>());
         customer.setAddresses(new ArrayList<Address>());
         customerService.save(customer);
         logger.info("CustomerId" + customer.getId());
@@ -215,14 +217,14 @@ public class FrontController {
         double total_price = 0;
         int quantity = 0;
 
-        List<Book> bookList = new ArrayList<>();
+//        List<Book> bookList = new ArrayList<>();
 
         for(Map.Entry<Book, Integer> entry : shoppingCart.entrySet()) {
             total_price = total_price + entry.getKey().getPrice() * entry.getValue();
             quantity = quantity + entry.getValue();
-            bookList.add(entry.getKey());
+//            bookList.add(entry.getKey());
            }
-        order.setBooks(bookList);
+//        order.setBooks(bookList);
         total_price = total_price + quantity*delivery.getCost()/2;
         total_price = total_price + delivery.getCost();
         order.setQuantities(quantity);
@@ -237,8 +239,7 @@ public class FrontController {
     @RequestMapping(value = "/submitOrder")
     public String submitOrder(@ModelAttribute Order order, @ModelAttribute Customer customer, Model model,BindingResult bindingResult) {
 
-        shoppingCart.clear();
-        model.addAttribute("shoppingCart", shoppingCart);
+
         order.setStatuses(new ArrayList<Status>());
         order.setHistories(new ArrayList<History>());
         Status status = new Status();
@@ -258,13 +259,45 @@ public class FrontController {
             customer.setOrders(new ArrayList<Order>());
 
         customer.getOrders().add(order);
+
+      customerService.update(customer);
+
+       Set<OrderBook> orderBooks = new HashSet<>();
+        for(Map.Entry<Book, Integer> entry : shoppingCart.entrySet()) {
+            OrderBook orderBook = new OrderBook();
+            orderBook.setQuantity(entry.getValue());
+            orderBook.setBook(entry.getKey());
+            orderBook.setOrder(order);
+            orderBooks.add(orderBook);
+            orderService.saveOrderBook(orderBook);
+        }
+        order.setOrderBooks(orderBooks);
+
+
         Customer saved_customer = customerService.update(customer);
 //        orderService.update(order);
+
         List<Order> orders = saved_customer.getOrders();
 
         model.addAttribute("orders", orders);
         logger.info("Submitting order {}", order);
         model.addAttribute("order", order);
+
+
+
+        for(Map.Entry<Book, Integer> entry : shoppingCart.entrySet()) {
+            OrderBook orderBook = new OrderBook();
+            orderBook.setQuantity(entry.getValue());
+            orderBook.setBook(entry.getKey());
+            orderBook.setOrder(order);
+            logger.info("OrderBook {}", orderBook.getBook());
+//            orderService.saveOrderBook(orderBook);
+        }
+
+
+        shoppingCart.clear();
+        model.addAttribute("shoppingCart", shoppingCart);
+        model.addAttribute("customer", saved_customer);
         return "orderSuccess";
     }
 
@@ -274,6 +307,8 @@ public class FrontController {
         model.addAttribute("orders", orders);
         for(Order order: orders) {
             logger.info("Listing order {}", order);
+            for(OrderBook myorder: order.getOrderBooks() )
+                logger.info("MYBOOK {}", myorder.getBook());
         }
 
         return "orderStatus";

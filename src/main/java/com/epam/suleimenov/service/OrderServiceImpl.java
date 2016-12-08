@@ -2,6 +2,7 @@ package com.epam.suleimenov.service;
 
 import com.epam.suleimenov.DAO.OrderDAO;
 import com.epam.suleimenov.domain.Order;
+import com.epam.suleimenov.domain.OrderBook;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,10 @@ public class OrderServiceImpl implements OrderService {
 
     public void save(Order order) {
         orderDAO.save(order);
+    }
+
+    @Override
+    public void saveOrderBook(OrderBook orderBook) {
+        orderDAO.saveOrderBook(orderBook);
     }
 }

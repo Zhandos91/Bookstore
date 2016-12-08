@@ -1,14 +1,16 @@
 package com.epam.suleimenov.domain;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import org.hibernate.annotations.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "BOOK_ORDER")
@@ -29,10 +31,9 @@ public class Order extends BaseEntity implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date expected_delivery;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JoinTable(name = "ORDER_BOOK", joinColumns = @JoinColumn(name = "order_fk", nullable = false), inverseJoinColumns = @JoinColumn(name = "book_fk", nullable = false))
-    private List<Book> books;
+    @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
+    private Set<OrderBook> orderBooks = new HashSet<>();
+
 
     @OneToOne
     @Cascade({CascadeType.PERSIST, CascadeType.SAVE_UPDATE})
@@ -99,12 +100,16 @@ public class Order extends BaseEntity implements Serializable {
         this.expected_delivery = expected_delivery;
     }
 
-    public List<Book> getBooks() {
-        return books;
+    public Set<OrderBook> getOrderBooks() {
+        return orderBooks;
     }
 
-    public void setBooks(List<Book> books) {
-        this.books = books;
+    public void setOrderBooks(Set<OrderBook> orderBooks) {
+        this.orderBooks = orderBooks;
+    }
+
+    public void addOrderBook(OrderBook orderBook) {
+        this.orderBooks.add(orderBook);
     }
 
     public Delivery getDelivery() {

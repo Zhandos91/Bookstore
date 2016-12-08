@@ -1,6 +1,7 @@
 package com.epam.suleimenov.DAO;
 
 import com.epam.suleimenov.domain.Order;
+import com.epam.suleimenov.domain.OrderBook;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -41,6 +42,11 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public Order update(Order order) {
         return (Order)getSession().merge(order);
+    }
+
+    @Override
+    public void saveOrderBook(OrderBook orderBook) {
+        getSession().save(orderBook);
     }
 
     public Session getSession() {

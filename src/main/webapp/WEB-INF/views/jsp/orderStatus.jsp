@@ -66,12 +66,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach var="book" items="${order.books}">
+                        <c:forEach var="orderBook" items="${order.orderBooks}">
                             <tr class="info">
-                                <td>${book.title}</td>
-                                <td>${book.author}</td>
-                                <td>${book.ISBN}</td>
-                                <td>$${book.price}</td>
+                                <td>${orderBook.book.title} ${orderBook.quantity}</td>
+                                <td>${orderBook.book.author}</td>
+                                <td>${orderBook.book.ISBN}</td>
+                                <td>$${orderBook.book.price}</td>
                             </tr>
                         </c:forEach>
                         </tbody>

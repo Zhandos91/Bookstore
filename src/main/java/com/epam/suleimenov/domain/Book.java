@@ -1,13 +1,11 @@
 package com.epam.suleimenov.domain;
 
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -24,11 +22,13 @@ public class Book extends BaseEntity implements Serializable {
     private Double price;
     private Integer ISBN;
     private Integer pages;
+    @Column(length = 2000)
     private String description;
+    @Column(length = 1000)
     private String brief;
-    @ManyToMany(mappedBy = "books", fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Order> orders;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    private Set<OrderBook> orderBooks = new HashSet<>();
 
 
     public String getTitle() {
@@ -103,12 +103,16 @@ public class Book extends BaseEntity implements Serializable {
         this.brief = brief;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public Set<OrderBook> getOrderBooks() {
+        return orderBooks;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setOrderBooks(Set<OrderBook> orderBooks) {
+        this.orderBooks = orderBooks;
+    }
+
+    public void addOrderBook(OrderBook orderBook) {
+        this.orderBooks.add(orderBook);
     }
 
     @Override
