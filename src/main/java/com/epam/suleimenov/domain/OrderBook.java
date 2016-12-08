@@ -15,7 +15,7 @@ public class OrderBook extends BaseEntity implements Serializable {
     @JoinColumn(name = "ORDER_ID")
     private Order order;
     @ManyToOne
-    @Cascade(CascadeType.ALL)
+//    @Cascade(CascadeType.)
     @JoinColumn(name = "BOOK_ID")
     private Book book;
 

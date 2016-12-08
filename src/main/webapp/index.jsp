@@ -23,6 +23,7 @@
         Returning customers, please, log in <a href="${pageContext.request.contextPath}/login">HERE</a>
     </h4>
 </div>
+<%--Current Locale : ${pageContext.response.locale}--%>
 
 </body>
 </html>

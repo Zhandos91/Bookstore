@@ -4,14 +4,21 @@ import com.epam.suleimenov.domain.*;
 import com.epam.suleimenov.service.BookService;
 import com.epam.suleimenov.service.CustomerService;
 import com.epam.suleimenov.service.OrderService;
+import com.epam.suleimenov.validator.AddressFormValidator;
+import com.epam.suleimenov.validator.CustomerFormValidator;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.MessageSourceAware;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import javax.validation.Valid;
 
 import java.util.*;
 
@@ -19,8 +26,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 
 @Controller
-@SessionAttributes({"shoppingCart", "book", "customer", "bookList", "delivery_methods", "order", "orders"})
-public class FrontController {
+@SessionAttributes({"shoppingCart", "book", "customer", "delivery_methods", "order", "orders"})
+public class FrontController implements MessageSourceAware {
 
     @Autowired
     CustomerService customerService;
@@ -31,11 +38,38 @@ public class FrontController {
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    CustomerFormValidator customerFormValidator;
+
+    @Autowired
+    AddressFormValidator addressFormValidator;
+
+
+    private MessageSource messageSource;
+
+    @InitBinder("customer")
+    public void initCustomerBinder(WebDataBinder binder) {
+        binder.setValidator(customerFormValidator);
+//        binder.addValidators(customerFormValidator, addressFormValidator );
+
+    }
+
+    @InitBinder("address")
+    public void initAddressBinder(WebDataBinder binder) {
+        binder.setValidator(addressFormValidator);
+//        binder.addValidators(customerFormValidator, addressFormValidator );
+
+    }
+
     private List<Delivery>  delivery_methods = new ArrayList<>();
 
     private Map<Book, Integer> shoppingCart = new HashMap<>();
 
     private static Logger logger = getLogger(FrontController.class);
+
+
+
+
 
     {
         logger.info("Initializing delivery method");
@@ -65,14 +99,24 @@ public class FrontController {
 
     }
 
+
+    @Override
+    public void setMessageSource(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
     @RequestMapping(value = "/listBooks")
-    public String home(@ModelAttribute Customer customer, Model model) {
+    public String home(Model model) {
         logger.info("Listing Books");
         List<Book> bookList = bookService.getList();
+        for(Book mybook: bookList)
+            logger.info("Showing book {}", mybook);
+
+
         model.addAttribute("bookList", bookList);
 //        List<Order> orders = orderService.getList();
-        List<Order> orders = customer.getOrders();
-        model.addAttribute("orders", orders);
+//        List<Order> orders = customer.getOrders();
+//        model.addAttribute("orders", orders);
         return "listBooks";
     }
 
@@ -85,8 +129,11 @@ public class FrontController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginSubmit(@ModelAttribute(value = "customer") Customer existing_customer, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if(existing_customer == null || existing_customer.getEmail().equals("") || existing_customer.getPassword().equals(""))
+        if(existing_customer == null || existing_customer.getEmail().equals("") || existing_customer.getPassword().equals("")) {
+            String message = messageSource.getMessage("loginForm.error", null, LocaleContextHolder.getLocale());
+
             return "login";
+        }
         Customer  customer = customerService.findCustomerByLogin(existing_customer.getEmail());
         logger.info("Found {}", customer);
         if(customer == null)
@@ -111,14 +158,21 @@ public class FrontController {
         Customer customer = new Customer();
         logger.info("Signing up a new customer");
         model.addAttribute("customer", customer);
-        model.addAttribute("address", new Address());
+//        model.addAttribute("address", new Address());
 
         return "customerForm";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String registrationFormSubmit(@ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String registrationFormSubmit( @Valid @ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         logger.info("Customer {}", customer);
+
+        if(bindingResult.hasErrors()) {
+            return "customerForm";
+        }
+
+
+
         customer.setOrders(new ArrayList<Order>());
         customer.setAddresses(new ArrayList<Address>());
         customerService.save(customer);
@@ -130,15 +184,20 @@ public class FrontController {
 
     @RequestMapping(value = "/addAddress", method = RequestMethod.GET)
     public String addAddress(Model model) {
+        logger.info("Adding address");
         model.addAttribute("address", new Address());
         return "addressForm";
     }
 
     @RequestMapping(value = "/addAddress", method = RequestMethod.POST)
-    public String addAddress(@ModelAttribute Address address, @ModelAttribute Customer customer, BindingResult bindingResult) {
+    public String addAddress(@Valid @ModelAttribute Address address, @ModelAttribute Customer customer, BindingResult bindingResult) {
 
         logger.info("Adding address {}", address);
+        if(bindingResult.hasErrors())
+            return "addressForm";
         logger.info("Adding address to a customer {}", customer);
+
+
 
         List<Address> addresses = customer.getAddresses();
         addresses.add(address);
@@ -273,10 +332,16 @@ public class FrontController {
         }
         order.setOrderBooks(orderBooks);
 
+        for(Map.Entry<Book, Integer> entry : shoppingCart.entrySet()) {
+            entry.getKey().setOrderBooks(orderBooks);
+        }
+
+
         Customer saved_customer = customerService.update(customer);
 
         List<Order> orders = saved_customer.getOrders();
 
+        orderService.update(order);
         model.addAttribute("orders", orders);
         logger.info("Submitting order {}", order);
         model.addAttribute("order", order);

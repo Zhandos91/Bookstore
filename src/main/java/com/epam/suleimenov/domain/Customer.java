@@ -8,6 +8,8 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import java.io.Serializable;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.validator.constraints.Email;
+
 import java.util.List;
 
 @Entity
@@ -25,6 +27,7 @@ public class Customer extends BaseEntity implements Serializable {
     @Column(nullable = false)
     private Integer phone;
     @Column(nullable = false)
+    @Email
     private String email;
     @Column(nullable = false)
     private String password;

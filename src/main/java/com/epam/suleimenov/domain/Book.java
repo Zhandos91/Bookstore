@@ -118,7 +118,8 @@ public class Book extends BaseEntity implements Serializable {
     @Override
     public String toString() {
         return "Book{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ",title='" + title + '\'' +
                 ", publisher='" + publisher + '\'' +
                 ", released_date=" + released_date +
                 ", price=" + price +

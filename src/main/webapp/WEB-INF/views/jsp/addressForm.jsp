@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+        .error
+        {
+            color: #ff0000;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
@@ -27,6 +35,7 @@
             <label style="text-align: right" class="control-label col-xs-2" for="city" >City:</label>
             <div class="col-xs-10">
                 <sf:input path="city" />
+                <sf:errors path="city" cssClass="error" />
             </div>
         </div>
 
@@ -34,6 +43,7 @@
             <label style="text-align: right" class="control-label col-xs-2" for="state" >State:</label>
             <div class="col-xs-10" >
                 <sf:input path="state" />
+                <sf:errors path="state" cssClass="error" />
             </div>
         </div>
 
@@ -41,6 +51,7 @@
             <label style="text-align: right" class="control-label col-xs-2" for="zip_code" >Zip code:</label>
             <div class="col-xs-10" >
                 <sf:input path="zip_code" />
+                <sf:errors path="zip_code" cssClass="error" />
             </div>
         </div>
 
@@ -48,6 +59,7 @@
             <label style="text-align: right" class="control-label col-xs-2" for="country" >Country:</label>
             <div class="col-xs-10" >
                 <sf:input path="country" />
+                <sf:errors path="country" cssClass="error" />
             </div>
         </div>
 
