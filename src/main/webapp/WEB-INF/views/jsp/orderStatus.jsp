@@ -59,6 +59,7 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <th>Quantity</th>
                             <th>Title</th>
                             <th>Author</th>
                             <th>ISBN</th>
@@ -68,7 +69,8 @@
                         <tbody>
                         <c:forEach var="orderBook" items="${order.orderBooks}">
                             <tr class="info">
-                                <td>${orderBook.book.title} ${orderBook.quantity}</td>
+                                <td>${orderBook.quantity}</td>
+                                <td>${orderBook.book.title} </td>
                                 <td>${orderBook.book.author}</td>
                                 <td>${orderBook.book.ISBN}</td>
                                 <td>$${orderBook.book.price}</td>

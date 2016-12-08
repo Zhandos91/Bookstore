@@ -273,26 +273,13 @@ public class FrontController {
         }
         order.setOrderBooks(orderBooks);
 
-
         Customer saved_customer = customerService.update(customer);
-//        orderService.update(order);
 
         List<Order> orders = saved_customer.getOrders();
 
         model.addAttribute("orders", orders);
         logger.info("Submitting order {}", order);
         model.addAttribute("order", order);
-
-
-
-        for(Map.Entry<Book, Integer> entry : shoppingCart.entrySet()) {
-            OrderBook orderBook = new OrderBook();
-            orderBook.setQuantity(entry.getValue());
-            orderBook.setBook(entry.getKey());
-            orderBook.setOrder(order);
-            logger.info("OrderBook {}", orderBook.getBook());
-//            orderService.saveOrderBook(orderBook);
-        }
 
 
         shoppingCart.clear();

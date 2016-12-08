@@ -39,7 +39,10 @@
                     </a>
                 </label>
                 <label class="control-label col-xs-2">${book.value}</label>
-                <label class="control-label col-xs-2"><c:out value="$${book.value * book.key.price}"/> </label>
+
+               <c:set var="subtotal" > <c:out value="${book.value * book.key.price}"/></c:set>
+
+                <label class="control-label col-xs-2">$<fmt:formatNumber type="number" maxFractionDigits="2" value="${subtotal}" /> </label>
 
                 <c:set var="total" value="${total + book.value * book.key.price}"/>
 
