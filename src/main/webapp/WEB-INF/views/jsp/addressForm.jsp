@@ -27,8 +27,6 @@
     </div>
 
 
-<%--<spring:url value="/listBooks" var="listBooks" />--%>
-
     <sf:form modelAttribute="address" class="form-horizontal" role="form" method="post" >
 
         <div class="form-group" >
@@ -50,7 +48,7 @@
         <div class="form-group" >
             <label style="text-align: right" class="control-label col-xs-2" for="zip_code" >Zip code:</label>
             <div class="col-xs-10" >
-                <sf:input type="number" path="zip_code" />
+                <sf:input path="zip_code" />
                 <sf:errors path="zip_code" cssClass="error" />
             </div>
         </div>
@@ -66,9 +64,9 @@
         <div class="form-group">
             <div class="col-xs-offset-2 col-xs-10">
                 <button type="submit" class="btn btn-primary">Submit</button>
-                <c:if test="${not empty customer.addresses}" >
+                <%--<c:if test="${not empty customer.addresses}" >--%>
                 <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks">CANCEL</a>
-                </c:if>
+                <%--</c:if>--%>
             </div>
         </div>
 

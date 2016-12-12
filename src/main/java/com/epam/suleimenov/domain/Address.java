@@ -1,19 +1,28 @@
 package com.epam.suleimenov.domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 
 @Entity
 public class Address extends BaseEntity implements Serializable {
 
     @Column(nullable = false)
+    @NotBlank
     private String city;
     @Column(nullable = false)
+    @NotBlank
+    @Pattern(regexp = "\\w{2}")
     private String state;
     @Column(nullable = false)
-    private Integer zip_code;
+    @NotBlank
+    @Pattern(regexp = "\\d{6}")
+    private String zip_code;
     @Column(nullable = false)
+    @NotBlank
     private String country;
 
     public String getCity() {
@@ -32,11 +41,11 @@ public class Address extends BaseEntity implements Serializable {
         this.state = state;
     }
 
-    public Integer getZip_code() {
+    public String getZip_code() {
         return zip_code;
     }
 
-    public void setZip_code(Integer zip_code) {
+    public void setZip_code(String zip_code) {
         this.zip_code = zip_code;
     }
 

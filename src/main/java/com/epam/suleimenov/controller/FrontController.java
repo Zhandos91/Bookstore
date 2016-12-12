@@ -12,7 +12,6 @@ import org.springframework.context.MessageSourceAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -41,12 +40,12 @@ public class FrontController implements MessageSourceAware {
 
     private MessageSource messageSource;
 
-    @InitBinder("customer")
-    public void initCustomerBinder(WebDataBinder binder) {
-        binder.setValidator(customerFormValidator);
-//       binder.addValidators(customerFormValidator, addressFormValidator );
-
-    }
+//    @InitBinder("customer")
+//    public void initCustomerBinder(WebDataBinder binder) {
+//        binder.setValidator(customerFormValidator);
+////       binder.addValidators(customerFormValidator, addressFormValidator );
+//
+//    }
 
     private List<Delivery>  delivery_methods = new ArrayList<>();
 
@@ -190,28 +189,15 @@ public class FrontController implements MessageSourceAware {
     }
 
     @RequestMapping(value = "/addAddress", method = RequestMethod.POST)
-    public String addAddress(@ModelAttribute Address address, @ModelAttribute Customer customer, BindingResult bindingResult) {
+    public String addAddress(@ModelAttribute Customer customer, @ModelAttribute @Valid Address address, BindingResult bindingResult) {
 
         logger.info("Submitting address {}", address);
 
-        if(address.getCity().equals("") || address.getZip_code() == null || address.getCountry().equals("") || address.getState().equals("")) {
-            bindingResult.rejectValue("city", "NotNull.addressForm.city");
-            return "addressForm";
-        }
-//        String addressForm =  "addressForm";
+//        if(address.getCity().equals("") || address.getZip_code() == null || address.getCountry().equals("") || address.getState().equals("")) {
+          if(bindingResult.hasErrors())
+              return "addressForm";
+        //bindingResult.rejectValue("city", "NotNull.addressForm.city");
 
-//        if(address.getCity().equals("")) {
-//            bindingResult.rejectValue("city", "NotNull.addressForm.city");
-//            return addressForm;
-//        } else if(address.getZip_code() == null) {
-//            bindingResult.rejectValue("zip_code", "NotNull.addressForm.zip_code");
-//            return addressForm;
-//        } else if(address.getCountry().equals("")) {
-//            bindingResult.rejectValue("country", "NotNull.addressForm.country");
-//            return addressForm;
-//        }  else if(address.getState().equals("")) {
-//            bindingResult.rejectValue("state", "NotNull.addressForm.state");
-//            return addressForm;
 //        }
 
 
@@ -286,7 +272,7 @@ public class FrontController implements MessageSourceAware {
 
        }
         logger.info("Submitting Shipping {}", delivery);
-        model.addAttribute(delivery);
+        model.addAttribute("delivery", delivery);
 
         Order order = new Order();
         order.setOrdered_date(new Date());
@@ -315,10 +301,11 @@ public class FrontController implements MessageSourceAware {
 
 
     @RequestMapping(value = "/submitOrder")
-    public String submitOrder(@ModelAttribute Order order, @ModelAttribute Customer customer, @ModelAttribute CreditCard creditCard, Model model,BindingResult bindingResult) {
+    public String submitOrder(@ModelAttribute Order order, @ModelAttribute Customer customer, @Valid @ModelAttribute CreditCard creditCard, BindingResult bindingResult, Model model) {
 
         logger.info("CreditCard Info {}", creditCard);
-
+        if(bindingResult.hasErrors())
+            return "shipping";
 
 
         order.setStatuses(new ArrayList<Status>());

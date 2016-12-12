@@ -2,9 +2,11 @@ package com.epam.suleimenov.domain;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.List;
 
@@ -17,18 +19,24 @@ import java.util.List;
 public class Customer extends BaseEntity implements Serializable {
 
     @Column(nullable = false)
-    @Size(min=5, max=10)
+    @NotBlank
     private String first_name;
     @Column(nullable = false)
+    @NotBlank
     private String last_name;
     @Column(nullable = false)
-    private Integer phone;
+    @NotBlank
+    @Pattern(regexp = "\\d{6}", message = "{phone.validation}")
+    private String phone;
     @Column(nullable = false)
-//    @Email
+    @Email
+    @NotBlank
     private String email;
     @Column(nullable = false)
+    @NotBlank
     private String password;
     @Transient
+    @NotBlank
     private String confirm_password;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -59,11 +67,11 @@ public class Customer extends BaseEntity implements Serializable {
         this.last_name = last_name;
     }
 
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

@@ -1,10 +1,22 @@
 package com.epam.suleimenov.domain;
 
+import org.hibernate.validator.constraints.CreditCardNumber;
+import org.hibernate.validator.constraints.NotBlank;
+
+import javax.validation.constraints.Pattern;
+
 public class CreditCard {
 
+    @NotBlank
     private String type;
+    @NotBlank
+    @CreditCardNumber
     private String number;
+    @NotBlank
+    @Pattern(regexp = "\\d{2}")
     private String month;
+    @NotBlank
+    @Pattern(regexp = "\\d{4}")
     private String year;
 
     public String getType() {
