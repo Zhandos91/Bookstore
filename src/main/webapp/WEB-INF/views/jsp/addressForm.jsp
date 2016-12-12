@@ -50,7 +50,7 @@
         <div class="form-group" >
             <label style="text-align: right" class="control-label col-xs-2" for="zip_code" >Zip code:</label>
             <div class="col-xs-10" >
-                <sf:input path="zip_code" />
+                <sf:input type="number" path="zip_code" />
                 <sf:errors path="zip_code" cssClass="error" />
             </div>
         </div>

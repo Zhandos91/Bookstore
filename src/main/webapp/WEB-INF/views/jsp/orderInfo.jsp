@@ -7,6 +7,13 @@
 <head>
     <meta name="viewport" content="initial-scale=1, maximum-scale=1">
     <link rel='stylesheet' href='webjars/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <style>
+        .error
+        {
+            color: #ff0000;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,7 +25,7 @@
 
 <div class="container">
 
-    <sf:form action="${submitOrder}" modelAttribute="order" role="form">
+    <sf:form action="${submitOrder}" modelAttribute="creditCard" role="form">
 
 
         <div class="row equal">
@@ -42,23 +49,27 @@
                     <div class="panel-body">
                         <div class="form-group">
                             <label class="control-label col-xs-4" for="card_type">Card Type:</label>
-                            <select class="control-panel" id="card_type">
-                                <option value="">CHOOSE ONE</option>
-                                <option value="ADMIN">AMERICAN EXPRESS</option>
-                                <option value="STUDENT">VISA</option>
-                                <option value="TEACHER">MASTERCARD</option>
-                            </select>
+                            <sf:select path="type" class="control-panel" id="card_type">
+                                <sf:option value="NONE">CHOOSE ONE</sf:option>
+                                <sf:option value="AMERICAN EXPRESS">AMERICAN EXPRESS</sf:option>
+                                <sf:option value="VISA">VISA</sf:option>
+                                <sf:option value="MASTERCARD">MASTERCARD</sf:option>
+                                <sf:errors path="type" cssClass="error" />
+                            </sf:select>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-xs-4" for="number">Number: </label>
-                            <input type="text" size="15" id="number"/>
+                            <sf:input path="number" type="text" size="15" id="number"/>
+                            <sf:errors path="number" cssClass="error" />
                         </div>
                         <div class="form-group">
                             <label class="control-label col-xs-4">Expiration: </label>
-                            <input type="text" size="1" placeholder="mm" id="exp_m"/>
+                            <sf:input path="month" type="text" size="1" placeholder="mm" id="exp_m"/>
+                            <sf:errors path="month" cssClass="error" />
 
                             <label class="control-label">/</label>
-                            <input type="text" size="1" placeholder="yyyy" id="exp_y"/>
+                            <sf:input path="year" type="text" size="1" placeholder="yyyy" id="exp_y"/>
+                            <sf:errors path="year" cssClass="error" />
                         </div>
 
                     </div>

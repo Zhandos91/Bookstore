@@ -26,6 +26,7 @@ public class CustomerFormValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotNull.customerForm.password");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "confirm_password", "NotNull.customerForm.confirm_password");
 
+
         if(!(customer.getPassword().equals(customer.getConfirm_password()))){
             errors.rejectValue("confirm_password", "NotMatch.customerForm.confirm_password");
         }

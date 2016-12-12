@@ -1,15 +1,11 @@
 package com.epam.suleimenov.domain;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
-import org.hibernate.annotations.CascadeType;
-import org.hibernate.validator.constraints.Email;
-
 import java.util.List;
 
 @Entity
@@ -21,13 +17,14 @@ import java.util.List;
 public class Customer extends BaseEntity implements Serializable {
 
     @Column(nullable = false)
+    @Size(min=5, max=10)
     private String first_name;
     @Column(nullable = false)
     private String last_name;
     @Column(nullable = false)
     private Integer phone;
     @Column(nullable = false)
-    @Email
+//    @Email
     private String email;
     @Column(nullable = false)
     private String password;

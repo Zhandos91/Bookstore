@@ -48,7 +48,7 @@
         <div class="form-group">
             <label class="control-label col-md-2" for="phone">Phone Number:</label>
             <div class="col-md-10">
-                <sf:input path="phone"/>
+                <sf:input type="number" path="phone"/>
                 <sf:errors path="phone" class="control-label"  cssClass="error" />
             </div>
         </div>

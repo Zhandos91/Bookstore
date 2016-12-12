@@ -4,13 +4,11 @@ import com.epam.suleimenov.domain.*;
 import com.epam.suleimenov.service.BookService;
 import com.epam.suleimenov.service.CustomerService;
 import com.epam.suleimenov.service.OrderService;
-import com.epam.suleimenov.validator.AddressFormValidator;
 import com.epam.suleimenov.validator.CustomerFormValidator;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.MessageSourceAware;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,8 +16,8 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import javax.validation.Valid;
 
+import javax.validation.Valid;
 import java.util.*;
 
 import static org.slf4j.LoggerFactory.getLogger;
@@ -41,23 +39,12 @@ public class FrontController implements MessageSourceAware {
     @Autowired
     CustomerFormValidator customerFormValidator;
 
-    @Autowired
-    AddressFormValidator addressFormValidator;
-
-
     private MessageSource messageSource;
 
     @InitBinder("customer")
     public void initCustomerBinder(WebDataBinder binder) {
         binder.setValidator(customerFormValidator);
-//        binder.addValidators(customerFormValidator, addressFormValidator );
-
-    }
-
-    @InitBinder("address")
-    public void initAddressBinder(WebDataBinder binder) {
-        binder.setValidator(addressFormValidator);
-//        binder.addValidators(customerFormValidator, addressFormValidator );
+//       binder.addValidators(customerFormValidator, addressFormValidator );
 
     }
 
@@ -129,16 +116,26 @@ public class FrontController implements MessageSourceAware {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginSubmit(@ModelAttribute(value = "customer") Customer existing_customer, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-        if(existing_customer == null || existing_customer.getEmail().equals("") || existing_customer.getPassword().equals("")) {
-            String message = messageSource.getMessage("loginForm.error", null, LocaleContextHolder.getLocale());
 
+//        String message = messageSource.getMessage("loginForm.error", null, LocaleContextHolder.getLocale());
+//        logger.info("Message:" + message);
+
+        String loginFormError = "loginForm.error";
+
+
+
+
+        if(existing_customer == null || existing_customer.getEmail().equals("") || existing_customer.getPassword().equals("")) {
+            bindingResult.rejectValue("password", "loginForm.error.empty");
             return "login";
         }
         Customer  customer = customerService.findCustomerByLogin(existing_customer.getEmail());
         logger.info("Found {}", customer);
-        if(customer == null)
+        if(customer == null) {
+            bindingResult.rejectValue("password", loginFormError);
             return "login";
 
+        }
         if(customer.getPassword().equals(existing_customer.getPassword())) {
             redirectAttributes.addFlashAttribute("customer", customer);
             return "redirect:/listBooks";
@@ -167,6 +164,9 @@ public class FrontController implements MessageSourceAware {
     public String registrationFormSubmit( @Valid @ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         logger.info("Customer {}", customer);
 
+
+
+
         if(bindingResult.hasErrors()) {
             return "customerForm";
         }
@@ -190,14 +190,32 @@ public class FrontController implements MessageSourceAware {
     }
 
     @RequestMapping(value = "/addAddress", method = RequestMethod.POST)
-    public String addAddress(@Valid @ModelAttribute Address address, @ModelAttribute Customer customer, BindingResult bindingResult) {
+    public String addAddress(@ModelAttribute Address address, @ModelAttribute Customer customer, BindingResult bindingResult) {
 
-        logger.info("Adding address {}", address);
-        if(bindingResult.hasErrors())
+        logger.info("Submitting address {}", address);
+
+        if(address.getCity().equals("") || address.getZip_code() == null || address.getCountry().equals("") || address.getState().equals("")) {
+            bindingResult.rejectValue("city", "NotNull.addressForm.city");
             return "addressForm";
+        }
+//        String addressForm =  "addressForm";
+
+//        if(address.getCity().equals("")) {
+//            bindingResult.rejectValue("city", "NotNull.addressForm.city");
+//            return addressForm;
+//        } else if(address.getZip_code() == null) {
+//            bindingResult.rejectValue("zip_code", "NotNull.addressForm.zip_code");
+//            return addressForm;
+//        } else if(address.getCountry().equals("")) {
+//            bindingResult.rejectValue("country", "NotNull.addressForm.country");
+//            return addressForm;
+//        }  else if(address.getState().equals("")) {
+//            bindingResult.rejectValue("state", "NotNull.addressForm.state");
+//            return addressForm;
+//        }
+
+
         logger.info("Adding address to a customer {}", customer);
-
-
 
         List<Address> addresses = customer.getAddresses();
         addresses.add(address);
@@ -291,12 +309,16 @@ public class FrontController implements MessageSourceAware {
         order.setPayment_method("online");
         order.setDelivery(delivery);
         model.addAttribute("order", order);
+        model.addAttribute("creditCard", new CreditCard());
         return "orderInfo";
     }
 
 
     @RequestMapping(value = "/submitOrder")
-    public String submitOrder(@ModelAttribute Order order, @ModelAttribute Customer customer, Model model,BindingResult bindingResult) {
+    public String submitOrder(@ModelAttribute Order order, @ModelAttribute Customer customer, @ModelAttribute CreditCard creditCard, Model model,BindingResult bindingResult) {
+
+        logger.info("CreditCard Info {}", creditCard);
+
 
 
         order.setStatuses(new ArrayList<Status>());
