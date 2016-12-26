@@ -7,8 +7,6 @@ import com.epam.suleimenov.service.OrderService;
 import com.epam.suleimenov.validator.CustomerFormValidator;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.MessageSourceAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,8 +21,8 @@ import static org.slf4j.LoggerFactory.getLogger;
 
 
 @Controller
-@SessionAttributes({"shoppingCart", "book", "customer", "delivery_methods", "order", "orders"})
-public class FrontController implements MessageSourceAware {
+@SessionAttributes({"shoppingCart", "book", "customer", "delivery_methods", "delivery", "order", "orders"})
+public class FrontController {
 
     @Autowired
     CustomerService customerService;
@@ -37,15 +35,6 @@ public class FrontController implements MessageSourceAware {
 
     @Autowired
     CustomerFormValidator customerFormValidator;
-
-    private MessageSource messageSource;
-
-//    @InitBinder("customer")
-//    public void initCustomerBinder(WebDataBinder binder) {
-//        binder.setValidator(customerFormValidator);
-////       binder.addValidators(customerFormValidator, addressFormValidator );
-//
-//    }
 
     private List<Delivery>  delivery_methods = new ArrayList<>();
 
@@ -85,44 +74,22 @@ public class FrontController implements MessageSourceAware {
 
     }
 
-
-    @Override
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
-    }
-
     @RequestMapping(value = "/listBooks")
     public String home(Model model) {
         logger.info("Listing Books");
         List<Book> bookList = bookService.getList();
-        for(Book mybook: bookList)
-            logger.info("Showing book {}", mybook);
-
-
         model.addAttribute("bookList", bookList);
-//        List<Order> orders = orderService.getList();
-//        List<Order> orders = customer.getOrders();
-//        model.addAttribute("orders", orders);
         return "listBooks";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute("customer", new Customer());
-
         return "login";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginSubmit(@ModelAttribute(value = "customer") Customer existing_customer, Model model, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-
-//        String message = messageSource.getMessage("loginForm.error", null, LocaleContextHolder.getLocale());
-//        logger.info("Message:" + message);
-
-        String loginFormError = "loginForm.error";
-
-
-
 
         if(existing_customer == null || existing_customer.getEmail().equals("") || existing_customer.getPassword().equals("")) {
             bindingResult.rejectValue("password", "loginForm.error.empty");
@@ -131,7 +98,7 @@ public class FrontController implements MessageSourceAware {
         Customer  customer = customerService.findCustomerByLogin(existing_customer.getEmail());
         logger.info("Found {}", customer);
         if(customer == null) {
-            bindingResult.rejectValue("password", loginFormError);
+            bindingResult.rejectValue("password", "loginForm.error");
             return "login";
 
         }
@@ -142,36 +109,20 @@ public class FrontController implements MessageSourceAware {
         return "login";
     }
 
-    @RequestMapping(value = "/logout")
-    public String logout(SessionStatus sessionStatus) {
-        sessionStatus.setComplete();
-        return "redirect:/";
-    }
-
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String registrationForm(Model model) {
-
-        Customer customer = new Customer();
+    public String signup(Model model) {
         logger.info("Signing up a new customer");
-        model.addAttribute("customer", customer);
-//        model.addAttribute("address", new Address());
-
+        model.addAttribute("customer", new Customer());
         return "customerForm";
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String registrationFormSubmit( @Valid @ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String signupSubmit( @Valid @ModelAttribute Customer customer, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         logger.info("Customer {}", customer);
-
-
-
-
+        new CustomerFormValidator().validate(customer, bindingResult);
         if(bindingResult.hasErrors()) {
             return "customerForm";
         }
-
-
-
         customer.setOrders(new ArrayList<Order>());
         customer.setAddresses(new ArrayList<Address>());
         customerService.save(customer);
@@ -179,6 +130,12 @@ public class FrontController implements MessageSourceAware {
         logger.info("{}" + customer);
         redirectAttributes.addFlashAttribute("customer", customer);
         return "redirect:/addAddress";
+    }
+
+    @RequestMapping(value = "/logout")
+    public String logout(SessionStatus sessionStatus) {
+        sessionStatus.setComplete();
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/addAddress", method = RequestMethod.GET)
@@ -190,36 +147,22 @@ public class FrontController implements MessageSourceAware {
 
     @RequestMapping(value = "/addAddress", method = RequestMethod.POST)
     public String addAddress(@ModelAttribute Customer customer, @ModelAttribute @Valid Address address, BindingResult bindingResult) {
-
         logger.info("Submitting address {}", address);
-
-//        if(address.getCity().equals("") || address.getZip_code() == null || address.getCountry().equals("") || address.getState().equals("")) {
-          if(bindingResult.hasErrors())
+         if(bindingResult.hasErrors())
               return "addressForm";
-        //bindingResult.rejectValue("city", "NotNull.addressForm.city");
-
-//        }
-
 
         logger.info("Adding address to a customer {}", customer);
-
         List<Address> addresses = customer.getAddresses();
         addresses.add(address);
         customerService.update(customer);
-
         return "redirect:/listBooks";
     }
 
     @RequestMapping(value = "/{book_id}", method = RequestMethod.GET)
     public String showBook(@PathVariable("book_id") Integer id, Model model ) {
         Book book = bookService.findById(id);
-//           for(Map.Entry<Book, Integer> entry : shoppingCart.entrySet()) {
-//
-//           }
-
         logger.info("Showing {}", book);
         model.addAttribute("book", book);
-
         return "showBook";
     }
 
@@ -305,8 +248,7 @@ public class FrontController implements MessageSourceAware {
 
         logger.info("CreditCard Info {}", creditCard);
         if(bindingResult.hasErrors())
-            return "shipping";
-
+            return "orderInfo";
 
         order.setStatuses(new ArrayList<Status>());
         order.setHistories(new ArrayList<History>());

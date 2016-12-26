@@ -50,7 +50,6 @@
                         <div class="form-group">
                             <label class="control-label col-xs-4" for="card_type">Card Type:</label>
                             <sf:select path="type" class="control-panel" id="card_type">
-                                <sf:option value="NONE">CHOOSE ONE</sf:option>
                                 <sf:option value="AMERICAN EXPRESS">AMERICAN EXPRESS</sf:option>
                                 <sf:option value="VISA">VISA</sf:option>
                                 <sf:option value="MASTERCARD">MASTERCARD</sf:option>

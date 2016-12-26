@@ -19,24 +19,18 @@ import java.util.List;
 public class Customer extends BaseEntity implements Serializable {
 
     @Column(nullable = false)
-    @NotBlank
     private String first_name;
     @Column(nullable = false)
-    @NotBlank
     private String last_name;
     @Column(nullable = false)
-    @NotBlank
-    @Pattern(regexp = "\\d{6}", message = "{phone.validation}")
+    @Pattern(regexp = "\\d{6}", message = "{validation.phone}")
     private String phone;
     @Column(nullable = false)
     @Email
-    @NotBlank
     private String email;
     @Column(nullable = false)
-    @NotBlank
     private String password;
     @Transient
-    @NotBlank
     private String confirm_password;
 
     @OneToMany(fetch = FetchType.EAGER)

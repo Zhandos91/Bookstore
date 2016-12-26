@@ -15,11 +15,11 @@ public class Address extends BaseEntity implements Serializable {
     private String city;
     @Column(nullable = false)
     @NotBlank
-    @Pattern(regexp = "\\w{2}")
+    @Pattern(regexp = "\\w{2}", message = "{validation.state}")
     private String state;
     @Column(nullable = false)
     @NotBlank
-    @Pattern(regexp = "\\d{6}")
+    @Pattern(regexp = "\\d{6}", message = "{validation.zipcode}")
     private String zip_code;
     @Column(nullable = false)
     @NotBlank

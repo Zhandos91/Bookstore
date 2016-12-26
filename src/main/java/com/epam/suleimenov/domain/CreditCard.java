@@ -13,10 +13,10 @@ public class CreditCard {
     @CreditCardNumber
     private String number;
     @NotBlank
-    @Pattern(regexp = "\\d{2}")
+    @Pattern(regexp = "\\d{2}", message = "{validation.creditcard.month}")
     private String month;
     @NotBlank
-    @Pattern(regexp = "\\d{4}")
+    @Pattern(regexp = "\\d{4}", message = "{validation.creditcard.year}")
     private String year;
 
     public String getType() {
