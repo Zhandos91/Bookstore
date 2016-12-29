@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="sf" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,6 +17,9 @@
 </head>
 <body>
 <div class="container">
+
+    Welcome: <spring:message code="welcome" />
+
     <sf:form class="form-inline" role="form" modelAttribute="customer" method="post">
 
     <div class="page-header"><h2>Login Information</h2></div>

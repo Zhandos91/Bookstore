@@ -1,3 +1,29 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
+<%--<%@ page contentType="text/html;charset=UTF-8" %>--%>
+<%--<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>--%>
+<%--<html>--%>
+<%--<body>--%>
+<%--<h1>Spring MVC internationalization example</h1>--%>
+
+<%--Language : <a href="?lang=en">English</a>|<a href="?lang=ru">Russian</a>--%>
+
+<%--<h2>--%>
+    <%--welcome.springmvc : <spring:message code="welcome" text="default text" />--%>
+<%--</h2>--%>
+
+<%--<h2>--%>
+    <%--welcome.springmvc : <spring:message code="NotNull.addressForm.city" text="default text" />--%>
+<%--</h2>--%>
+
+<%--Current Locale : ${pageContext.response.locale}--%>
+
+
+<%--</body>--%>
+<%--</html>--%>
+
+
+
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
@@ -23,7 +49,17 @@
         Returning customers, please, log in <a href="${pageContext.request.contextPath}/login">HERE</a>
     </h4>
 </div>
-<%--Current Locale : ${pageContext.response.locale}--%>
+
+<h2>
+welcome.springmvc : <spring:message code="welcome" text="default text" />
+</h2>
+
+<h2>
+welcome.springmvc : <spring:message code="NotNull.addressForm.city" text="default text" />
+</h2>
+
+Current Locale : ${pageContext.response.locale}
 
 </body>
 </html>
+
