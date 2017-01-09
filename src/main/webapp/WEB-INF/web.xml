@@ -29,5 +29,4 @@
         <!--<url-pattern>/welcome</url-pattern>-->
     </servlet-mapping>
 
-
 </web-app>

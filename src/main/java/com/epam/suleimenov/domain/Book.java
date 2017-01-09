@@ -9,6 +9,10 @@ import java.util.Set;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
+@NamedQueries({
+        @NamedQuery(name = "Book.getAll", query = "select b from Book b where b.lang = :lang"),
+        @NamedQuery(name = "Book.findById", query = "select b from Book b where b.id = :id and b.lang = :lang"),
+})
 public class Book extends BaseEntity implements Serializable {
 
     @Column(nullable = false)
@@ -24,8 +28,8 @@ public class Book extends BaseEntity implements Serializable {
     private Integer pages;
     @Column(length = 2000)
     private String description;
-    @Column(length = 1000)
-    private String brief;
+    @Column
+    private String lang;
 
     @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
     private Set<OrderBook> orderBooks = new HashSet<>();
@@ -95,14 +99,6 @@ public class Book extends BaseEntity implements Serializable {
         this.description = description;
     }
 
-    public String getBrief() {
-        return brief;
-    }
-
-    public void setBrief(String brief) {
-        this.brief = brief;
-    }
-
     public Set<OrderBook> getOrderBooks() {
         return orderBooks;
     }
@@ -113,6 +109,14 @@ public class Book extends BaseEntity implements Serializable {
 
     public void addOrderBook(OrderBook orderBook) {
         this.orderBooks.add(orderBook);
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     @Override

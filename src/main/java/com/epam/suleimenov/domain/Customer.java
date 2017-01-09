@@ -12,9 +12,9 @@ import java.util.List;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Customer.getAll", query = "select c from Customer c"),
-        @NamedQuery(name = "Customer.fetchById", query = "select c from Customer c where c.id = :id"),
-        @NamedQuery(name = "Customer.getByEmail", query = "select c from Customer c where c.email = :email")
+        @NamedQuery(name = "Customer.getAll", query = "select c from Customer c where c.lang = :lang"),
+        @NamedQuery(name = "Customer.fetchById", query = "select c from Customer c where c.id = :id and c.lang = :lang"),
+        @NamedQuery(name = "Customer.getByEmail", query = "select c from Customer c where c.email = :email and c.lang = :lang")
 })
 public class Customer extends BaseEntity implements Serializable {
 
@@ -43,7 +43,8 @@ public class Customer extends BaseEntity implements Serializable {
     @JoinColumn(name = "customer_id", nullable = false)
     private List<Order> orders;
 
-
+    @Column
+    private String lang;
 
     public String getFirst_name() {
         return first_name;
@@ -107,6 +108,14 @@ public class Customer extends BaseEntity implements Serializable {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     @Override

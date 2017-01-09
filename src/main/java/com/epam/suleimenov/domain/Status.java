@@ -9,6 +9,7 @@ public class Status extends BaseEntity implements Serializable {
 
     private String info;
 
+
     public String getInfo() {
         return info;
     }

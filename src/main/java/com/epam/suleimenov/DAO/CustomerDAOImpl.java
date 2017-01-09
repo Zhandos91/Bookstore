@@ -2,11 +2,11 @@ package com.epam.suleimenov.DAO;
 
 
 import com.epam.suleimenov.domain.Customer;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -18,8 +18,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     private SessionFactory sessionFactory;
 
     public List<Customer> getList() {
-        Criteria criteria = getSession().createCriteria(Customer.class);
-        return criteria.list();
+        Query query = getSession().getNamedQuery("Customer.getAll").setParameter("lang", LocaleContextHolder.getLocale().getLanguage());
+        return query.list();
     }
 
     public Customer update(Customer customer) {
@@ -35,7 +35,8 @@ public class CustomerDAOImpl implements CustomerDAO {
     }
 
     public Customer findById(Integer id) {
-        Customer customer = getSession().get(Customer.class, id);
+        Query query = getSession().getNamedQuery("Customer.fetchById").setParameter("id", id).setParameter("lang", LocaleContextHolder.getLocale().getLanguage());
+        Customer customer = (Customer) query.uniqueResult();
         return customer;
     }
 
@@ -46,7 +47,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public Customer getCustomerByEmail(String email) {
-        Query query = getSession().getNamedQuery("Customer.getByEmail").setParameter("email", email);
+        Query query = getSession().getNamedQuery("Customer.getByEmail").setParameter("email", email).setParameter("lang", LocaleContextHolder.getLocale().getLanguage());
         Customer customer = (Customer) query.uniqueResult();
         return customer;
     }

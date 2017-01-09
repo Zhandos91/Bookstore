@@ -14,6 +14,10 @@ import java.util.Set;
 
 @Entity
 @Table(name = "BOOK_ORDER")
+@NamedQueries({
+        @NamedQuery(name = "Order.getAll", query = "select o from Order o where o.lang = :lang"),
+        @NamedQuery(name = "Order.findById", query = "select o from Order o where o.id = :id and o.lang = :lang"),
+})
 public class Order extends BaseEntity implements Serializable {
 
     @Column(nullable = false)
@@ -34,6 +38,8 @@ public class Order extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "order", fetch = FetchType.EAGER)
     private Set<OrderBook> orderBooks = new HashSet<>();
 
+    @Column
+    private String lang;
 
     @OneToOne
     @Cascade({CascadeType.PERSIST, CascadeType.SAVE_UPDATE})
@@ -134,6 +140,14 @@ public class Order extends BaseEntity implements Serializable {
 
     public void setHistories(List<History> histories) {
         this.histories = histories;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     @Override

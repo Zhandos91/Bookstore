@@ -31,7 +31,7 @@
         <div class="row equal">
             <div class="col-xs-6">
                 <div class="panel panel-success">
-                    <div class="panel-heading"><h3>Shipping To</h3></div>
+                    <div class="panel-heading"><h3><spring:message code="order.panel.shipment.header" /></h3></div>
                     <div class="panel-body">
                         <h4><strong> ${customer.first_name} ${customer.last_name}</strong></h4>
                         <h4>
@@ -45,10 +45,10 @@
             </div>
             <div class="col-xs-6">
                 <div class="panel panel-info">
-                    <div class="panel-heading"><h3>Credit Card</h3></div>
+                    <div class="panel-heading"><h3><spring:message code="order.panel.credit_card.header" /></h3></div>
                     <div class="panel-body">
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="card_type">Card Type:</label>
+                            <label class="control-label col-xs-4" for="card_type"><spring:message code="order.panel.credit_card.type" />:</label>
                             <sf:select path="type" class="control-panel" id="card_type">
                                 <sf:option value="AMERICAN EXPRESS">AMERICAN EXPRESS</sf:option>
                                 <sf:option value="VISA">VISA</sf:option>
@@ -57,12 +57,12 @@
                             </sf:select>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4" for="number">Number: </label>
+                            <label class="control-label col-xs-4" for="number"><spring:message code="order.panel.credit_card.number" />:</label>
                             <sf:input path="number" type="text" size="15" id="number"/>
                             <sf:errors path="number" cssClass="error" />
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-4">Expiration: </label>
+                            <label class="control-label col-xs-4"><spring:message code="order.panel.credit_card.exp" />:</label>
                             <sf:input path="month" type="text" size="1" placeholder="mm" id="exp_m"/>
                             <sf:errors path="month" cssClass="error" />
 
@@ -81,8 +81,8 @@
 
         <h4>
             <div class="form-group">
-                <label class="text-primary control-label col-xs-offset-7 col-xs-2">Quantity</label>
-                <label class="text-primary control-label col-xs-2">Price</label>
+                <label class="text-primary control-label col-xs-offset-7 col-xs-2"><spring:message code="order.label.quantity" /></label>
+                <label class="text-primary control-label col-xs-2"><spring:message code="order.label.price" /></label>
             </div>
             <c:forEach items="${shoppingCart}" var="book">
 
@@ -105,7 +105,7 @@
         <br/><br/>
         <h4>
             <div class="form-group">
-                <label class="text-danger control-label col-xs-offset-7 col-xs-2">Total Price</label>
+                <label class="text-danger control-label col-xs-offset-7 col-xs-2"><spring:message code="order.label.total_price" /></label>
                 <label class="text-danger control-label col-xs-2">$<fmt:formatNumber type="number"
                                                                                      maxFractionDigits="2"
                                                                                      value="${order.total_price}"/></label>
@@ -118,8 +118,8 @@
             $${order.delivery.cost}</label></h4>
 
         <div class="form-group">
-            <button type="submit" class="col-xs-offset-7 btn btn-primary">ORDER NOW</button>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks">CANCEL</a>
+            <button type="submit" class="col-xs-offset-7 btn btn-primary"><spring:message code="order.button.order" /></button>
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks"><spring:message code="order.button.cancel" /></a>
         </div>
 
 

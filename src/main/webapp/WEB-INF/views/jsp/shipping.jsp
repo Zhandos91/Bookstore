@@ -1,5 +1,6 @@
 <%@ taglib prefix="sf" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -13,7 +14,7 @@
 
 
 <div class="container" >
-    <div class="page-header"><h2 class="text-danger">Shipping Methods</h2></div>
+    <div class="page-header"><h2 class="text-danger"><spring:message code="shipping.header" /></h2></div>
 
 
 
@@ -31,7 +32,7 @@
     </c:forEach>
 
     <br/><br/>
-    <button style="float: left;" type="submit" class="btn btn-primary">NEXT</button>
+    <button style="float: left;" type="submit" class="btn btn-primary"><spring:message code="shipping.next" /></button>
 </sf:form>
 </div>
 </body>

@@ -1,10 +1,11 @@
 package com.epam.suleimenov.DAO;
 
 import com.epam.suleimenov.domain.Book;
-import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,8 +17,8 @@ public class BookDAOImpl implements BookDAO {
     private SessionFactory sessionFactory;
 
     public List<Book> getList() {
-        Criteria criteria = getSession().createCriteria(Book.class);
-        return criteria.list();
+        Query query = getSession().getNamedQuery("Book.getAll").setParameter("lang", LocaleContextHolder.getLocale().getLanguage());
+        return query.list();
     }
 
     public Book update(Book book) {
@@ -29,7 +30,8 @@ public class BookDAOImpl implements BookDAO {
     }
 
     public Book findById(Integer id) {
-        Book book = getSession().get(Book.class, id);
+        Query query = getSession().getNamedQuery("Book.findById").setParameter("id", id).setParameter("lang", LocaleContextHolder.getLocale().getLanguage());
+        Book book = (Book) query.uniqueResult();
         return book;
     }
 

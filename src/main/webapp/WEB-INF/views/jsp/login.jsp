@@ -18,23 +18,21 @@
 <body>
 <div class="container">
 
-    Welcome: <spring:message code="welcome" />
-
     <sf:form class="form-inline" role="form" modelAttribute="customer" method="post">
 
-    <div class="page-header"><h2>Login Information</h2></div>
+    <div class="page-header"><h2><spring:message code="login.header" /></h2></div>
 
     <div class="form-group">
-        <label class="control-label" for="email">Login:</label>
+        <label class="control-label" for="email"><spring:message code="login.login" />:</label>
         <sf:input path="email" type="email" class="form-control" placeholder="Enter login"/>
     </div>
 
     <div class="form-group">
-        <label class="control-label" for="password">Password:</label>
+        <label class="control-label" for="password"><spring:message code="login.password" />:</label>
         <sf:input path="password" class="form-control" type="password" placeholder="Enter password"/>
     </div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
+    <button type="submit" class="btn btn-primary"><spring:message code="login.button" /></button>
 
         <br/><br/>
         <sf:errors path="password" cssClass="error"/>

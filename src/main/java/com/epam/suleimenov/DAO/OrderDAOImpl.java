@@ -2,10 +2,11 @@ package com.epam.suleimenov.DAO;
 
 import com.epam.suleimenov.domain.Order;
 import com.epam.suleimenov.domain.OrderBook;
-import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -16,11 +17,10 @@ public class OrderDAOImpl implements OrderDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-
     @Override
     public List getList() {
-        Criteria criteria = getSession().createCriteria(Order.class);
-        return criteria.list();
+        Query query = getSession().getNamedQuery("Order.getAll").setParameter("lang", LocaleContextHolder.getLocale().getLanguage());
+        return query.list();
     }
 
     @Override
@@ -35,7 +35,8 @@ public class OrderDAOImpl implements OrderDAO {
 
     @Override
     public Order findById(Integer id) {
-        Order order = getSession().get(Order.class, id);
+        Query query = getSession().getNamedQuery("Order.findById").setParameter("id", id).setParameter("lang", LocaleContextHolder.getLocale().getLanguage());
+        Order order = (Order) query.uniqueResult();
         return order;
     }
 

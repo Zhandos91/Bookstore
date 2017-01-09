@@ -10,20 +10,22 @@ import java.io.Serializable;
 @Entity
 public class Address extends BaseEntity implements Serializable {
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1024)
     @NotBlank
     private String city;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1024)
     @NotBlank
-    @Pattern(regexp = "\\w{2}", message = "{validation.state}")
     private String state;
     @Column(nullable = false)
     @NotBlank
     @Pattern(regexp = "\\d{6}", message = "{validation.zipcode}")
     private String zip_code;
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1024)
     @NotBlank
     private String country;
+
+    @Column
+    private String lang;
 
     public String getCity() {
         return city;
@@ -55,6 +57,14 @@ public class Address extends BaseEntity implements Serializable {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
     }
 
     @Override

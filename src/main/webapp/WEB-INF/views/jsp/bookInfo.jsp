@@ -18,16 +18,16 @@
 <sf:form class="form-horizontal" action="${addToCart}" role="form" method="post">
 
     <h2 class="text-success" align="center">${book.title}</h2>
-    <h4 class="text-info col-xs-offset-1">By ${book.author}</h4>
-    <h4 class="text-warning col-xs-offset-1">Published by ${book.publisher}</h4>
-    <h4 class="text-danger col-xs-offset-1">Price:$${book.price}</h4>
-    <h4 class="text-info col-xs-offset-1">Pages:${book.pages}</h4>
+    <h4 class="text-info col-xs-offset-1"><spring:message code="book.author" /> ${book.author}</h4>
+    <h4 class="text-warning col-xs-offset-1"><spring:message code="book.publisher" /> ${book.publisher}</h4>
+    <h4 class="text-danger col-xs-offset-1"><spring:message code="book.price" />:$${book.price}</h4>
+    <h4 class="text-info col-xs-offset-1"><spring:message code="book.pages" />:${book.pages}</h4>
     <h4 class="text-primary">${book.description}</h4>
 
     <br/>
     <div class="form-group">
         <div class="col-xs-offset-1">
-            <button type="submit" class="btn btn-primary">ADD TO CART</button>
+            <button type="submit" class="btn btn-primary"><spring:message code="book.button.addToCart" /></button>
         </div>
     </div>
 </sf:form>
