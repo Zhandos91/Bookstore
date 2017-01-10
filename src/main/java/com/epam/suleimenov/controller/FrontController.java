@@ -422,4 +422,9 @@ public class FrontController {
         return "test";
     }
 
+    @RequestMapping(value = "/")
+    public String welcome() {
+        return "welcome";
+    }
+
 }

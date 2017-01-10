@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,7 @@
 
 <div class="container">
     <div class="page-header">
-        <h1 class="text-danger">Your Orders</h1>
+        <h1 class="text-danger"><spring:message code="status.header" /></h1>
     </div>
 
     <div class="panel-group">
@@ -22,18 +23,18 @@
 
         <c:forEach items="${orders}" var="order" varStatus="loop">
             <div class="panel panel-primary">
-                <div class="panel-heading">Order#${loop.index + 1}</div>
+                <div class="panel-heading"><spring:message code="status.order.header" />#${loop.index + 1}</div>
                 <div class="panel-body">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Order#</th>
-                            <th>Ordered Date</th>
-                            <th>Status</th>
-                            <th>Method</th>
-                            <th>Tracking#</th>
-                            <th>Expected Delivery</th>
-                            <th>Total Charged</th>
+                            <th><spring:message code="status.order.row.order"/>#</th>
+                            <th><spring:message code="status.order.row.date"/></th>
+                            <th><spring:message code="status.order.row.status"/></th>
+                            <th><spring:message code="status.order.row.method"/></th>
+                            <th><spring:message code="status.order.row.tracking"/>#</th>
+                            <th><spring:message code="status.order.row.delivery"/></th>
+                            <th><spring:message code="status.order.row.charged"/></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,16 +55,16 @@
 
 
             <div class="panel panel-success">
-                <div class="panel-heading">Books</div>
+                <div class="panel-heading"><spring:message code="status.book.header"/></div>
                 <div class="panel-body">
                     <table class="table">
                         <thead>
                         <tr>
-                            <th>Quantity</th>
-                            <th>Title</th>
-                            <th>Author</th>
-                            <th>ISBN</th>
-                            <th>Price</th>
+                            <th><spring:message code="status.book.row.quantity"/></th>
+                            <th><spring:message code="status.book.row.title"/></th>
+                            <th><spring:message code="status.book.row.author"/></th>
+                            <th><spring:message code="status.book.row.isbn"/></th>
+                            <th><spring:message code="status.book.row.price"/></th>
                         </tr>
                         </thead>
                         <tbody>

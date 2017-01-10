@@ -17,7 +17,7 @@
 
     <spring:url value="/shipping" var="checkout"/>
 
-    <div style="align-content: center" class="text-danger"><h1>Your Cart</h1></div>
+    <div style="align-content: center" class="text-danger"><h1><spring:message code="cart.header" /></h1></div>
 
     <sf:form class="form-horizontal" action="${checkout}" method="get">
 
@@ -25,8 +25,8 @@
 
         <h3>
         <div class="form-group">
-            <label class="text-primary control-label col-xs-offset-7 col-xs-2">Quantity</label>
-            <label class="text-primary control-label col-xs-2">Price</label>
+            <label class="text-primary control-label col-xs-offset-7 col-xs-2"><spring:message code="cart.lable.quantity" /></label>
+            <label class="text-primary control-label col-xs-2"><spring:message code="cart.label.price" /></label>
         </div>
         <c:forEach items="${shoppingCart}" var="book">
 
@@ -46,14 +46,14 @@
 
                 <c:set var="total" value="${total + book.value * book.key.price}"/>
 
-                <a class="btn btn-primary" href="${pageContext.request.contextPath}/remove/${book.key.id}">REMOVE</a>
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/remove/${book.key.id}"><spring:message code="cart.button.remove" /></a>
 
             </div>
         </c:forEach>
 
 
         <div class="form-group">
-            <label class="text-danger control-label col-xs-offset-7 col-xs-2">Total Price</label>
+            <label class="text-danger control-label col-xs-offset-7 col-xs-2"><spring:message code="cart.label.total_price" /></label>
             <label class="text-danger control-label col-xs-2">$<fmt:formatNumber type="number"
                                                                                                    maxFractionDigits="2"
                                                                                                    value="${total}"/></label>
@@ -65,8 +65,8 @@
         
         <div class="form-group">
             <h3>
-            <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks">CONTINUE SHOPPING</a>
-            <button style="float: right;" type="submit" class="col-xs-offset-2 btn btn-primary">CHECKOUT</button>
+            <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks"><spring:message code="cart.button.continue" /></a>
+            <button style="float: right;" type="submit" class="col-xs-offset-2 btn btn-primary"><spring:message code="cart.button.checkout" /></button>
             </h3>
         </div>
 

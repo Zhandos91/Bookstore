@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,19 +10,16 @@
 <body>
 
 <div class="container">
-    <div class="page-header"><h2 class="text-success">Order Complete</h2></div>
+    <div class="page-header"><h2 class="text-success"><spring:message code="ordersubmit.header" /></h2></div>
 
-    <h3 class="text-info">Thank you for the order!</h3>
-    <strong>Your order number is:
+    <h3 class="text-info"><spring:message code="ordersubmit.thanks" /> </h3>
+    <strong><spring:message code="ordersubmit.order_number" />:
         <mark>${order.id}</mark>
-        ${o}
     </strong>
     <br/><br/>
-    <p>Once your order has been shipped we will notify you via the e-mail address that is listed in your your account
-        information.You can
-        review the status of your order at any time by clicking the Order Stratus button in the navigation menu.</p>
+    <p><spring:message code="ordersubmit.text" />.</p>
     <br/>
-    <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks">CONTINUE</a>
+    <a class="btn btn-primary" href="${pageContext.request.contextPath}/listBooks"><spring:message code="ordersubmit.button"/></a>
 </div>
 
 </body>

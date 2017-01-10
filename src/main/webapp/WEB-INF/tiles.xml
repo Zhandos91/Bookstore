@@ -66,4 +66,11 @@
         <put-attribute name="body" value="/WEB-INF/views/jsp/orderStatus.jsp" />
     </definition>
 
+    <definition name="welcome" extends="base" >
+        <put-attribute name="title" value="Welcome" />
+        <put-attribute name="body" value="/WEB-INF/views/jsp/welcome.jsp" />
+        <put-attribute name="menu" value="" />
+        <put-attribute name="header" value="/WEB-INF/views/jsp/loginHeader.jsp" />
+    </definition>
+
 </tiles-definitions>
