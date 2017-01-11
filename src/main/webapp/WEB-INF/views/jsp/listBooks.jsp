@@ -28,6 +28,12 @@
 
 </c:forEach>
 
+    <img src="http://www.w3schools.com/w3images/fjords.jpg" class="img-thumbnail" alt="Cinque Terre" width="304" height="236">
+    <spring:url value="/resources/images" var="images" />
+
+
+    <img src="${images}/nature.jpg" class="img-thumbnail" alt="Cinque Terre" width="304" height="236">
+
 </div>
 </body>
 </html>

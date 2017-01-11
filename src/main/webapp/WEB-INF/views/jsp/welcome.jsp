@@ -16,6 +16,8 @@
 <div class="container">
     <div class="page-header"><h2><spring:message code="welcome.header" /></h2></div>
 
+    <img src="http://178.33.143.235/wp-content/uploads/2014/12/MG_4451-b2.jpg" class="img-thumbnail" alt="Bookstore" width="404" height="336">
+
     <h4>
         <spring:message code="welcome.signup" /> <a href="${pageContext.request.contextPath}/signup"><spring:message code="welcome.link" /></a>
         <br/><br/>

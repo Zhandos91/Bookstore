@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns="http://www.springframework.org/schema/beans" xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- Scanning enable element on package -->
     <context:component-scan base-package="com.epam.suleimenov"/>
 
     <!-- Annotation handlers (Applied by default to ALL @controllers -->
-    <mvc:annotation-driven />
+    <!--<mvc:annotation-driven/>-->
 
-    <mvc:resources mapping="/webjars/**" location="/webjars/" />
-    <mvc:resources mapping="/resources/**" location="/resources/" />
-    <mvc:resources mapping="/css/**" location="/css/" />
+    <mvc:annotation-driven validator="validator"/>
+
+    <mvc:resources mapping="/webjars/**" location="/webjars/"/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+    <mvc:resources mapping="/css/**" location="/css/"/>
 
     <!-- Views mapped in JSPs under /WEB-INF/jsp -->
-    <bean id = "jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
@@ -30,8 +32,8 @@
 
     <!--Hibernate Session Factory Configuration-->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="jndiDataSource" />
-        <property name="packagesToScan" value="com.epam.suleimenov.domain" />
+        <property name="dataSource" ref="jndiDataSource"/>
+        <property name="packagesToScan" value="com.epam.suleimenov.domain"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
@@ -48,7 +50,7 @@
     <bean id="txManager"
           class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory">
-            <ref bean="sessionFactory" />
+            <ref bean="sessionFactory"/>
         </property>
     </bean>
 
@@ -65,53 +67,58 @@
     <!--Apache Tiles View Resolver-->
     <bean id="viewResolverTiles" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
-        <property name="order" value="1" />
+        <property name="order" value="1"/>
     </bean>
 
     <!--Locale Settings-->
 
     <!--<bean id="localeResolver"-->
-          <!--class="org.springframework.web.servlet.i18n.SessionLocaleResolver">-->
-        <!--<property name="defaultLocale" value="en" />-->
+    <!--class="org.springframework.web.servlet.i18n.SessionLocaleResolver">-->
+    <!--<property name="defaultLocale" value="en" />-->
     <!--</bean>-->
 
     <!--<bean id="localeChangeInterceptor"-->
-          <!--class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
-        <!--<property name="paramName" value="lang" />-->
+    <!--class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
+    <!--<property name="paramName" value="lang" />-->
     <!--</bean>-->
 
     <!--<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >-->
-        <!--<property name="interceptors">-->
-            <!--<list>-->
-                <!--<ref bean="localeChangeInterceptor" />-->
-            <!--</list>-->
-        <!--</property>-->
+    <!--<property name="interceptors">-->
+    <!--<list>-->
+    <!--<ref bean="localeChangeInterceptor" />-->
+    <!--</list>-->
+    <!--</property>-->
     <!--</bean>-->
-
 
 
     <!--Locale Settings-->
 
     <mvc:interceptors>
-    <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-    <property name="paramName" value="lang" />
-    </bean>
+        <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+            <property name="paramName" value="lang"/>
+        </bean>
     </mvc:interceptors>
 
     <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
-    <property name="defaultLocale" value="en"/>
+        <property name="defaultLocale" value="en"/>
     </bean>
 
     <bean id="messageSource"
-    class="org.springframework.context.support.ResourceBundleMessageSource">
-    <property name="basenames">
-    <list>
-    <value>validation</value>
-    <value>messages</value>
-    </list>
-    </property>
-    <property name="defaultEncoding" value="UTF-8" />
+          class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>validation</value>
+                <value>messages</value>
+                <value>ValidationMessages</value>
+            </list>
+        </property>
+        <property name="defaultEncoding" value="UTF-8"/>
     </bean>
 
+
+    <!--Message Interpolator for Locale-->
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+        <property name="validationMessageSource" ref="messageSource"/>
+    </bean>
 
 </beans>
