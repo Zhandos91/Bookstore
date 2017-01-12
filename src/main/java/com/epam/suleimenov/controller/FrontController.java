@@ -70,6 +70,7 @@ public class FrontController {
         delivery.setCost(2.0);
         delivery_methods.add(delivery);
 
+
     }
 
     @RequestMapping(value = "/listBooks")
@@ -77,6 +78,7 @@ public class FrontController {
         logger.info("Listing Books");
         List<Book> bookList = bookService.getList();
         model.addAttribute("bookList", bookList);
+
         return "listBooks";
     }
 
@@ -326,6 +328,8 @@ public class FrontController {
     @RequestMapping(value = "/addDefaultBooks")
     public String addDefaultBooks() {
 
+
+
         String current_locale = LocaleContextHolder.getLocale().getLanguage();
 
         if (current_locale.equals("ru")) {
@@ -424,6 +428,7 @@ public class FrontController {
 
     @RequestMapping(value = "/")
     public String welcome() {
+
         return "welcome";
     }
 

@@ -14,10 +14,11 @@
 <div class="container">
 
     <spring:url value="/addToCart" var="addToCart" />
-
+    <spring:url value="/resources/images" var="images" />
 <sf:form class="form-horizontal" action="${addToCart}" role="form" method="post">
 
     <h2 class="text-success" align="center">${book.title}</h2>
+    <img src="${images}/${book.title}.jpg" class="img-thumbnail" alt=${book.title} width="304" height="236">
     <h4 class="text-info col-xs-offset-1"><spring:message code="book.author" /> ${book.author}</h4>
     <h4 class="text-warning col-xs-offset-1"><spring:message code="book.publisher" /> ${book.publisher}</h4>
     <h4 class="text-danger col-xs-offset-1"><spring:message code="book.price" />:$${book.price}</h4>
