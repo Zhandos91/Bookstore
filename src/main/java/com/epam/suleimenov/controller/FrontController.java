@@ -5,6 +5,7 @@ import com.epam.suleimenov.service.BookService;
 import com.epam.suleimenov.service.CustomerService;
 import com.epam.suleimenov.service.OrderService;
 import com.epam.suleimenov.validator.CustomerFormValidator;
+import com.epam.suleimenov.webservice.Test;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -27,6 +28,9 @@ public class FrontController {
 
     @Autowired
     CustomerService customerService;
+
+    @Autowired
+    private Test test;
 
     @Autowired
     BookService bookService;
@@ -329,6 +333,9 @@ public class FrontController {
     public String addDefaultBooks() {
 
 
+        logger.info("Saving new books to database!!!");
+
+
 
         String current_locale = LocaleContextHolder.getLocale().getLanguage();
 
@@ -428,6 +435,9 @@ public class FrontController {
 
     @RequestMapping(value = "/")
     public String welcome() {
+
+        logger.info("Welcoming" + test.getTest());
+
 
         return "welcome";
     }

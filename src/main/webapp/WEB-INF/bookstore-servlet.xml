@@ -7,7 +7,7 @@
 
     <!-- Scanning enable element on package -->
     <context:component-scan base-package="com.epam.suleimenov"/>
-
+    <context:annotation-config />
     <!-- Annotation handlers (Applied by default to ALL @controllers -->
     <!--<mvc:annotation-driven/>-->
 
@@ -36,7 +36,7 @@
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</prop>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <!--<prop key="hibernate.show_sql">true</prop>-->
                 <!--<prop key="hibernate.format_sql">true</prop>-->
             </props>
@@ -119,5 +119,25 @@
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
+
+
+    <!--JAX-WS Webservice-->
+
+    <!--<wss:binding url="/hello">-->
+        <!--<wss:service>-->
+            <!--<ws:service bean="#helloWs"/>-->
+        <!--</wss:service>-->
+    <!--</wss:binding>-->
+
+
+    <bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
+        <!--<property name="baseAddress" value="http://localhost:8081/jaxws/"/>-->
+    </bean>
+
+    <!--<wss:binding url="/hello">-->
+        <!--<wss:service>-->
+            <!--<ws:service bean="#helloWs"/>-->
+        <!--</wss:service>-->
+    <!--</wss:binding>-->
 
 </beans>
