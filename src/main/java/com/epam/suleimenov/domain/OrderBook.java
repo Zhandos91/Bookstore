@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 
 @Entity
@@ -15,8 +16,8 @@ public class OrderBook extends BaseEntity implements Serializable {
     @JoinColumn(name = "ORDER_ID")
     private Order order;
     @ManyToOne
-//    @Cascade(CascadeType.)
     @JoinColumn(name = "BOOK_ID")
+//    @XmlTransient
     private Book book;
 
     private Integer quantity;

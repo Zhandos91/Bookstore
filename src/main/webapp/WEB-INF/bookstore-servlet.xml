@@ -5,9 +5,10 @@
        xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- Scanning enable element on package -->
+
+<!-- Scanning enable element on package -->
     <context:component-scan base-package="com.epam.suleimenov"/>
-    <context:annotation-config />
+    <!--<context:annotation-config />-->
     <!-- Annotation handlers (Applied by default to ALL @controllers -->
     <!--<mvc:annotation-driven/>-->
 
@@ -69,25 +70,6 @@
         <property name="order" value="1"/>
     </bean>
 
-    <!--Locale Settings-->
-
-    <!--<bean id="localeResolver"-->
-    <!--class="org.springframework.web.servlet.i18n.SessionLocaleResolver">-->
-    <!--<property name="defaultLocale" value="en" />-->
-    <!--</bean>-->
-
-    <!--<bean id="localeChangeInterceptor"-->
-    <!--class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">-->
-    <!--<property name="paramName" value="lang" />-->
-    <!--</bean>-->
-
-    <!--<bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping" >-->
-    <!--<property name="interceptors">-->
-    <!--<list>-->
-    <!--<ref bean="localeChangeInterceptor" />-->
-    <!--</list>-->
-    <!--</property>-->
-    <!--</bean>-->
 
 
     <!--Locale Settings-->
@@ -130,14 +112,20 @@
     <!--</wss:binding>-->
 
 
-    <bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">
+   <!--/ <bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">-->
         <!--<property name="baseAddress" value="http://localhost:8081/jaxws/"/>-->
-    </bean>
+    <!--</bean>-->
 
-    <!--<wss:binding url="/hello">-->
+    <!--<wss:binding url="/jaxws-spring">-->
         <!--<wss:service>-->
-            <!--<ws:service bean="#helloWs"/>-->
+            <!--<ws:service bean="#myWebService"/>-->
         <!--</wss:service>-->
     <!--</wss:binding>-->
+
+    <!--&lt;!&ndash; Web service bean &ndash;&gt;-->
+    <!--<bean id="myWebService" class="com.epam.suleimenov.webservice.TestWebService">-->
+        <!--<property name="test" ref="myTestObject" />-->
+    <!--</bean>-->
+    <!--<bean id="myTestObject" class="com.epam.suleimenov.webservice.Test" />-->
 
 </beans>
