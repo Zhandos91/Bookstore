@@ -20,15 +20,12 @@
     <servlet>
         <servlet-name>bookstore</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-        <!--<servlet-class>com.sun.xml.ws.transport.http.servlet.WSSpringServlet</servlet-class>-->
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>bookstore</servlet-name>
         <url-pattern>/</url-pattern>
-        <!--<url-pattern>/jaxws-spring</url-pattern>-->
-        <!--<url-pattern>/welcome</url-pattern>-->
     </servlet-mapping>
 
     <jsp-config>

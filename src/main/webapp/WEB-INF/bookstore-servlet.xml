@@ -8,9 +8,6 @@
 
 <!-- Scanning enable element on package -->
     <context:component-scan base-package="com.epam.suleimenov"/>
-    <!--<context:annotation-config />-->
-    <!-- Annotation handlers (Applied by default to ALL @controllers -->
-    <!--<mvc:annotation-driven/>-->
 
     <mvc:annotation-driven validator="validator"/>
 
@@ -101,31 +98,5 @@
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
         <property name="validationMessageSource" ref="messageSource"/>
     </bean>
-
-
-    <!--JAX-WS Webservice-->
-
-    <!--<wss:binding url="/hello">-->
-        <!--<wss:service>-->
-            <!--<ws:service bean="#helloWs"/>-->
-        <!--</wss:service>-->
-    <!--</wss:binding>-->
-
-
-   <!--/ <bean class="org.springframework.remoting.jaxws.SimpleJaxWsServiceExporter">-->
-        <!--<property name="baseAddress" value="http://localhost:8081/jaxws/"/>-->
-    <!--</bean>-->
-
-    <!--<wss:binding url="/jaxws-spring">-->
-        <!--<wss:service>-->
-            <!--<ws:service bean="#myWebService"/>-->
-        <!--</wss:service>-->
-    <!--</wss:binding>-->
-
-    <!--&lt;!&ndash; Web service bean &ndash;&gt;-->
-    <!--<bean id="myWebService" class="com.epam.suleimenov.webservice.TestWebService">-->
-        <!--<property name="test" ref="myTestObject" />-->
-    <!--</bean>-->
-    <!--<bean id="myTestObject" class="com.epam.suleimenov.webservice.Test" />-->
 
 </beans>

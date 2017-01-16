@@ -10,7 +10,7 @@ import javax.jws.WebService;
 import java.util.List;
 
 @WebService
-public class SOAPBookService {
+public class BookSOAP {
 
     @Autowired
     BookService bookService;
